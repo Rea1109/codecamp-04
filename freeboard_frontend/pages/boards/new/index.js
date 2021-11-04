@@ -1,3 +1,4 @@
+import {useMutation, gql} from '@apollo/client'
 import {useState} from 'react'
 import {
     Wrapper
@@ -23,6 +24,15 @@ import {
     ,ConfirmButton
     ,ErrorText
 } from '../../../styles/NewBoards.js'
+
+const CREATE_BOARD = gql`
+    mutation createBoard($createBoardInput: CreateBoardInput!) {
+        createBoard(createBoardInput: $createBoardInput){
+            _id
+            writer
+        }
+    }
+`
 
 export default function NewBoardsPage() {
 
@@ -111,11 +121,18 @@ export default function NewBoardsPage() {
         return isCheck
     }
 
+    const [createBoard] = useMutation(CREATE_BOARD)
+
     // 게시글 등록
-    const addBoard = (e)=>{
+    const addBoard = async ()=>{
 
         if(check()){
-            alert('등록이 완료되었습니다.')
+            const result = await createBoard({
+                variables:{
+
+                }
+            })
+            alert()
         }
 
     }
