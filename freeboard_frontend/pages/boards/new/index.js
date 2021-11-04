@@ -123,16 +123,21 @@ export default function NewBoardsPage() {
 
     const [createBoard] = useMutation(CREATE_BOARD)
 
-    // 게시글 등록
     const addBoard = async ()=>{
 
         if(check()){
             const result = await createBoard({
                 variables:{
-
+                    createBoardInput: {
+                        writer:writter,
+                        password:password,
+                        title:title,
+                        contents:content
+                    }
                 }
             })
-            alert()
+            console.log(result.data.createBoard._id)
+            alert("게시물 등록이 완료 되었습니다.")
         }
 
     }
