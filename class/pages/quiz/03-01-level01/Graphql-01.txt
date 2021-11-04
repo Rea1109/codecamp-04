@@ -1,0 +1,123 @@
+query{
+    fetchProfile(name:"철수") {
+      age
+    }
+  }
+
+query{
+  fetchProfile(name:"영희") {
+    school
+  }
+}
+
+query{
+  fetchBoard(number:3){
+    contents
+    createdAt
+  }
+}
+
+mutation {
+  createProfile(name: "우형래",age:28,school:"코드캠프"){
+    message
+  }
+}
+
+mutation {
+  createBoard(writer:"우형래",title:"graphql test",contents:"graphql 실습중 입니다."){
+    message
+	}
+}
+
+query{
+  fetchProfile(name:"우형래") {
+    number
+    name
+    age
+    school
+  }
+}
+
+query{
+  fetchBoard(number:65){
+    number
+    writer
+    contents
+    like
+  }
+}
+
+mutation{
+	updateProfile(name:"우형래",age:28,school:"코드"){
+  	_id
+    number
+		message
+  }
+}
+
+mutation{
+  updateBoard(number:65, title:"제목바꾸기", contents:"바꾸기"){
+    _id
+    number
+    message
+  }
+}
+
+mutation {
+  createProfile(name: "iphone",age:13,school:"apple"){
+    message
+  }
+}
+
+mutation{
+  createProduct(seller:"codecamp11",createProductInput:{name:"USB허브",detail:"다음주부터 공용허브 사용불가",price:90000}){
+    _id
+    message
+    number
+  }
+}
+
+mutation{
+  createProduct(seller:"codecamp11",createProductInput:{name:"USB허브",detail:"다음주부터 공용허브 사용불가",price:90000}){
+    _id
+    message
+    number
+  }
+}
+
+query{
+  fetchProduct(productId:"e982d52c-49d5-48bb-a4f2-96e00fb07153"){
+    price
+  }
+}
+
+mutation{
+  deleteProduct(productId:"e982d52c-49d5-48bb-a4f2-96e00fb07153"){
+    _id
+    number
+    message
+  }
+}
+
+query{
+  fetchProduct(productId:"e982d52c-49d5-48bb-a4f2-96e00fb07153"){
+    price
+  }
+}
+
+query{
+  fetchBoards(page:2){
+    number
+    writer
+    contents
+    like
+  }
+}
+
+10개의 게시글이 조회 됨
+
+query{
+	fetchBoardsCount
+}
+
+44

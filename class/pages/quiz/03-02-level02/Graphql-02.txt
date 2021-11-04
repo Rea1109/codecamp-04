@@ -1,0 +1,108 @@
+mutation {
+  createBoard(
+    createBoardInput:{writer:"손흥민",password:"123",title:"또짐",contents:"또 졌음 누누 경질됨"}
+  ){
+    _id
+    
+  }
+}
+
+query{
+  fetchBoard(boardId:"6182360cb55052002a93de2d"){
+    title
+    contents
+  }
+}
+
+mutation {
+  likeBoard(boardId:"6182360cb55052002a93de2d")
+}
+
+mutation {
+  dislikeBoard(boardId:"6182360cb55052002a93de2d")
+}
+
+query{
+  fetchBoard(boardId:"6182360cb55052002a93de2d"){
+    likeCount
+    dislikeCount
+  }
+}
+
+query{
+	fetchBoardsCount
+}
+
+mutation{
+  updateBoard(
+    password:"123",
+    boardId:"6182360cb55052002a93de2d",
+    updateBoardInput:{title:"토트넘 또 짐"}
+  ){
+    _id
+  }
+}
+
+query {
+  fetchBoards(search:"토트넘"){
+		_id
+    title
+  }
+}
+
+mutation {
+  createBoardComment(
+    createBoardCommentInput:{
+      writer:"코드",
+      password:"123",
+      contents:"hello"
+      rating:1103
+    },
+    boardId:"6182360cb55052002a93de2d"
+  ){
+    contents
+  }
+}
+
+mutation {
+  updateBoardComment(
+    boardCommentId:"61823a2bb55052002a93de4c",
+    updateBoardCommentInput:{
+      contents:"change",
+      rating:1104
+    }
+  ){
+    _id
+  }
+}
+
+mutation {
+  deleteBoardComment(
+    boardCommentId:"61823a2bb55052002a93de4c",
+  	password:"123"
+  )
+}
+
+query {
+  fetchBoardComments(boardId:"6182360cb55052002a93de2d"){
+    _id
+    writer
+    contents
+  }
+}
+
+query {
+  fetchBoardsOfTheBest{
+    _id
+  }
+}
+
+mutation{
+  createUser(createUserInput:{
+    email:"asd@asd"
+    password:"123"
+    name:"code"
+  }){
+    _id
+  }
+}
