@@ -54,7 +54,8 @@ function myPage(myShopping){
     grade = "Gold"
     }
 
-    result = "의류를 구매한 횟수는 총 "+totalCount+"회, 금액은 "+totalPrice+"원이며, 등급은"+grade+"입니다."
+    // result = "의류를 구매한 횟수는 총 "+totalCount+"회, 금액은 "+totalPrice+"원이며, 등급은"+grade+"입니다."
+    result = `의류를 구매한 횟수는 총 ${totalCount}회 금액은 ${totalPrice}원이며, 등급은 ${grade}입니다.`
 
     return result
 }

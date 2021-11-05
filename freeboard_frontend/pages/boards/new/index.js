@@ -1,3 +1,4 @@
+import {useRouter} from 'next/router'
 import {useMutation, gql} from '@apollo/client'
 import {useState} from 'react'
 import {
@@ -36,7 +37,7 @@ const CREATE_BOARD = gql`
     }
 `
 
-export default function NewBoardsPage() {
+export default function NewBoardPage() {
 
     //작성자 , 비밀번호 제목 내용 체크
 
@@ -49,6 +50,10 @@ export default function NewBoardsPage() {
     const [errorPassword, setErrorPassword] = useState('')
     const [errorTitle, setErrorTitle] = useState('')
     const [errorContent, setErrorContent] = useState('')
+
+    const [createBoard] = useMutation(CREATE_BOARD)
+
+    const router = useRouter()
 
     // input 입력값 얻어오기
     const getWriter = (e)=>{
@@ -95,51 +100,50 @@ export default function NewBoardsPage() {
         if(writer === ''){
             setErrorWriter('작성자를 입력해주세요')
             isCheck = false
-        }else{
-            setErrorWriter('')
         }
 
         if(password === ''){
             setErrorPassword('비밀번호를 입력해주세요')
             isCheck = false
-        }else{
-            setErrorPassword('')
         }
 
         if(title === ''){
             setErrorTitle('제목을 입력해주세요')
             isCheck = false
-        }else{
-            setErrorTitle('')
         }
 
         if(content === ''){
             setErrorContent('내용을 입력해주세요')
             isCheck = false
-        }else{
-            setErrorContent('')
         }
 
         return isCheck
     }
 
-    const [createBoard] = useMutation(CREATE_BOARD)
-
+    // 게시물 등록
     const addBoard = async ()=>{
 
         if(check()){
-            const result = await createBoard({
-                variables:{
-                    createBoardInput: {
-                        writer:writer,
-                        password:password,
-                        title:title,
-                        contents:content
+
+            try{
+                const result = await createBoard({
+                    variables:{
+                        createBoardInput: {
+                            writer,
+                            password,
+                            title,
+                            contents:content
+                        }
                     }
-                }
-            })
-            console.log(result.data.createBoard._id)
-            alert("게시물 등록이 완료 되었습니다.")
+                })
+                alert("게시물 등록이 완료 되었습니다.")
+                router.push(`/boards/getBoard/${result.data.createBoard._id}`)
+
+            }catch(error){
+                console.log(error.message)
+                alert("서버 에러")
+            }
+
         }
 
     }
