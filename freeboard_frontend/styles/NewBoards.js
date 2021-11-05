@@ -38,7 +38,7 @@ export const InputWrapper = styled.div`
     width: 100%;
     margin-bottom: 30px;
 `
-export const Writter = styled.div`
+export const Writer = styled.div`
 `
 
 export const Lavel = styled.div`

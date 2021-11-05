@@ -6,7 +6,7 @@ import {
     ,BodyWrapper
     ,AccountWrapper
     ,InputWrapper
-    ,Writter
+    ,Writer
     ,Lavel
     ,InputBox_1
     ,TextAreaBox
@@ -27,10 +27,12 @@ import {
 
 const CREATE_BOARD = gql`
     mutation createBoard($createBoardInput: CreateBoardInput!) {
+
         createBoard(createBoardInput: $createBoardInput){
             _id
             writer
         }
+        
     }
 `
 
@@ -38,23 +40,23 @@ export default function NewBoardsPage() {
 
     //작성자 , 비밀번호 제목 내용 체크
 
-    const [writter, setWritter] = useState("")
+    const [writer, setWriter] = useState("")
     const [password, setPassword] = useState('')
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
 
-    const [errorWritter, setErrorWritter] = useState("")
+    const [errorWriter, setErrorWriter] = useState("")
     const [errorPassword, setErrorPassword] = useState('')
     const [errorTitle, setErrorTitle] = useState('')
     const [errorContent, setErrorContent] = useState('')
 
     // input 입력값 얻어오기
-    const getWritter = (e)=>{
-        setWritter(e.target.value)
+    const getWriter = (e)=>{
+        setWriter(e.target.value)
         if(e.target.value !== ''){
-            setErrorWritter('')
+            setErrorWriter('')
         }else{
-            setErrorWritter('작성자를 입력해주세요')
+            setErrorWriter('작성자를 입력해주세요')
         }
     }
 
@@ -90,11 +92,11 @@ export default function NewBoardsPage() {
 
         let isCheck = true
 
-        if(writter === ''){
-            setErrorWritter('작성자를 입력해주세요')
+        if(writer === ''){
+            setErrorWriter('작성자를 입력해주세요')
             isCheck = false
         }else{
-            setErrorWritter('')
+            setErrorWriter('')
         }
 
         if(password === ''){
@@ -129,7 +131,7 @@ export default function NewBoardsPage() {
             const result = await createBoard({
                 variables:{
                     createBoardInput: {
-                        writer:writter,
+                        writer:writer,
                         password:password,
                         title:title,
                         contents:content
@@ -148,16 +150,16 @@ export default function NewBoardsPage() {
             <Title>게시글 등록</Title>
             <BodyWrapper>
                 <AccountWrapper>
-                    <Writter>
+                    <Writer>
                         <Lavel>작성자</Lavel>
-                        <InputBox_2 type="text" placeholder="이름을 입력해주세요" value={writter} onChange={getWritter} />
-                        <ErrorText>{errorWritter}</ErrorText>
-                    </Writter>
-                    <Writter>
+                        <InputBox_2 type="text" placeholder="이름을 입력해주세요" value={writer} onChange={getWriter} />
+                        <ErrorText>{errorWriter}</ErrorText>
+                    </Writer>
+                    <Writer>
                         <Lavel>비밀번호</Lavel>
                         <InputBox_2 type="password" placeholder="비밀번호를 입력해주세요" value={password} onChange={getPassword} />
                         <ErrorText>{errorPassword}</ErrorText>
-                    </Writter>
+                    </Writer>
                 </AccountWrapper>
                 <InputWrapper>
                     <Lavel>제목</Lavel>
