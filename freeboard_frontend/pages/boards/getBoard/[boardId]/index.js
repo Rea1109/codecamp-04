@@ -27,6 +27,8 @@ import {
     ,LikeCount
     ,DisLikeCount
     ,Text
+    ,MenuWrapper
+    ,Menu
 } from '../../../../styles/GetBoard.js'
 
 
@@ -96,6 +98,11 @@ export default function GetBoardPage(){
                     </Like>
                 </LikeWrapper>
             </BoardWrapper>
+            <MenuWrapper>
+                <Menu type="button" value="목록으로" />
+                <Menu type="button" value="수정하기" />
+                <Menu type="button" value="삭제하기" />
+            </MenuWrapper>
         </Wrapper>
     )
 }

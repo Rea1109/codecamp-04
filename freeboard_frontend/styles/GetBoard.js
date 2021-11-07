@@ -144,3 +144,19 @@ export const DisLikeCount = styled.div`
     color: #828282;
     text-align: center;
 `
+
+export const MenuWrapper = styled.div`
+    width: 1200px;
+    padding : 100px;
+    border-bottom: 1px solid #BDBDBD;
+    display: flex;
+    justify-content: center;
+`
+
+export const Menu = styled.input`
+    width: 179px;
+    height: 45px;
+    margin-right: 20px;
+    background-color: white;
+    border: 1px solid #BDBDBD;
+`
