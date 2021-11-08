@@ -7,8 +7,12 @@ function solution(n){
 }
 
 //x만큼 간격이 있는 n개의 숫자
-
-
-//문자열 내림차순으로 정렬하기
-
-// k번째 수
+function solution(x, n) {
+    let newArr = []
+    
+    for(let i=0; i<n; i++) {
+        newArr.push(x * (i+1))
+    }
+    
+    return newArr
+}

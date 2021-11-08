@@ -21,6 +21,17 @@ function remove(arr){
     return newArr
 }
 
+//멘토님 코드
+function remove_1(arr){
+    let newArr = []
+
+    for(let i=0; i<arr.length; i++){
+        if(newArr[newArr.length-1] !== arr[i]){
+            newArr.push(arr[i])
+        }
+    }
+}
+
 //추천코드
 function solution(arr)
 {
@@ -40,11 +51,21 @@ function solution(phone_number) {
     return str + phone_number.substring(num-4)
 }
 
+//멘토님 코드
+
+function hideNumbers(phone_number) {
+    let answer = ""
+    answer = answer.padStart(phone_number.length-4,"*")
+    answer + phone_number.slice(phone_number.length-4,phone_number.length)
+
+    return answer
+}
+
+
 //추천코드
 function hide_numbers(s){
     var result = "*".repeat(s.length - 4) + s.slice(-4);
     //함수를 완성해주세요
-  
     return result;
 }
 
