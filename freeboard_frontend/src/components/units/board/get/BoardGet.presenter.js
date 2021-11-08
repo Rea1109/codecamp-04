@@ -1,6 +1,3 @@
-import {useRouter} from 'next/router'
-import {useState} from 'react'
-import { useMutation, useQuery ,gql } from '@apollo/client'
 import {
     Wrapper
     ,BoardWrapper
@@ -29,33 +26,9 @@ import {
     ,Text
     ,MenuWrapper
     ,Menu
-} from '../../../../styles/GetBoard.js'
+} from './BoardGet.styles'
 
-
-const FETCH_BOARD = gql`
-    query fetchBoard($boardId:ID!){
-        fetchBoard(boardId:$boardId){
-            _id
-            writer
-            title
-            contents
-            likeCount
-            dislikeCount
-            createdAt
-        }
-    }
-`
-
-export default function GetBoardPage(){
-    const router = useRouter()
-
-    const {data} = useQuery(FETCH_BOARD,{
-        variables:{
-            boardId : router.query.boardId
-        }
-    })
-
-    console.log(data)
+export default function BoardGetUI(props) {
 
     return(
         <Wrapper>
@@ -64,8 +37,8 @@ export default function GetBoardPage(){
                     <Profile>
                         <PhotoIcon src="/images/profile.png" />
                         <Name>
-                            <Maintext>{data ? data.fetchBoard.writer: "loading......"}</Maintext>
-                            <Subtext>Date : {data ? data.fetchBoard.createdAt: "loading......"}</Subtext>
+                            <Maintext>{props.writer}</Maintext>
+                            <Subtext>Date : {props.createdAt}</Subtext>
                         </Name>
                     </Profile>
                     <HeadMenu>
@@ -74,13 +47,13 @@ export default function GetBoardPage(){
                     </HeadMenu>
                 </HeadWrapper>
                 <InnerWrapper>
-                    <Title>{data ? data.fetchBoard.title: "loading......"}</Title>
+                    <Title>{props.title}</Title>
                     <ContentWrapper>
                         <ContentImg>
                             <Img src="/images/image.png" />
                         </ContentImg>
                         <Content>
-                            <Text>{data ? data.fetchBoard.contents: "loading......"}</Text>
+                            <Text>{props.contents}</Text>
                         </Content>
                         <ContentVideo>
                             <Video src="/images/video.png" />
@@ -90,11 +63,11 @@ export default function GetBoardPage(){
                 <LikeWrapper>
                     <Like>
                         <LikeImg src="/images/Vector.png" />
-                        <LikeCount>{data ? data.fetchBoard.likeCount: "loading......"}</LikeCount>
+                        <LikeCount>{props.likeCount}</LikeCount>
                     </Like>
                     <Like>
                         <LikeImg src="/images/dislike.png" />
-                        <DisLikeCount>{data ? data.fetchBoard.dislikeCount: "loading......"}</DisLikeCount>
+                        <DisLikeCount>{props.dislikeCount}</DisLikeCount>
                     </Like>
                 </LikeWrapper>
             </BoardWrapper>
