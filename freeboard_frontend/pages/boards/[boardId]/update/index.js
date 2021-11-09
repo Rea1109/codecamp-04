@@ -1,5 +1,3 @@
-import BoardUpdate from '../../../../src/components/units/board/update/BoardUpdate.container'
-
 export default function UpdateBoardPage(){
-    return <BoardUpdate />
+    return <div>수정페이지</div>
 }
