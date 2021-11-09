@@ -6,19 +6,15 @@ import BoardGetUI from './BoardGet.presenter'
 export default function BoardGet() {
     const router = useRouter()
 
-    // const test = async()=>{
-    //      const {data} = await useQuery(FETCH_BOARD,{
-    //         variables:{
-    //             boardId : router.query.boardId
-    //         }
-    //     })
-    // }
-
     const {data} = useQuery(FETCH_BOARD,{
         variables:{
             boardId : router.query.boardId
         }
     })
+
+    const updateBoard = ()=>{
+        router.push(`/boards/${router.query.boardId}/update`)
+    }
 
     console.log(data)
     console.log(data?.fetchBoard.likeCount)
@@ -30,6 +26,7 @@ export default function BoardGet() {
             contents = {data?.fetchBoard.contents}
             likeCount = {data?.fetchBoard.likeCount}
             dislikeCount = {data?.fetchBoard.dislikeCount}
+            updateBoard = {updateBoard}
         />
     )
 }

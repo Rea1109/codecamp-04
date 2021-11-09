@@ -73,7 +73,7 @@ export default function BoardGetUI(props) {
             </BoardWrapper>
             <MenuWrapper>
                 <Menu type="button" value="목록으로" />
-                <Menu type="button" value="수정하기" />
+                <Menu type="button" value="수정하기" onClick={props.updateBoard}/>
                 <Menu type="button" value="삭제하기" />
             </MenuWrapper>
         </Wrapper>
