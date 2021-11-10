@@ -50,8 +50,14 @@ export const BoardCard = styled.div`
     box-shadow: 0px 0px 5px gray;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    
 `
+
+export const BoardBody = styled.div`
+    padding: 30px;
+    padding-top: 10px;
+`
+
 export const SearchTitle = styled.input`
     width: 776px;
     height: 52px;
@@ -130,12 +136,56 @@ export const BestTitle = styled.div`
         color: blue;
         font-weight: bolder;
     }
-
-    margin : 20px;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom : 30px;
 `
 export const BestWriter = styled.div`
-    margin : 20px;
+    display: flex;
+    margin-bottom: 8px;
 `
 export const BestDate = styled.div`
-    margin : 20px;
+    font-size: 12px;
+    color: #828282;
+`
+export const BoardImg = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #BDBDBD;
+    color: white;
+    font-size: 20px;
+    font-weight: bolder;
+    width: 100%;
+    height: 150px;
+    border-radius:15px 15px 0px 0px;
+    box-shadow: 0px 0px 5px gray;
+`
+
+export const ProfileImg = styled.img`
+    width: 20px;
+    height: 20px;
+`
+
+export const ProfileLabel = styled.div`
+    font-size: 16px;
+    padding-left: 10px;
+`
+
+export const BestInfo = styled.div`
+    display: flex;
+    justify-content: space-between;
+`
+
+export const Profile = styled.div`
+`
+
+export const Like = styled.div`
+
+`
+
+export const LikeCount = styled.div`
+    font-size: 16px;
+    margin-top: 10px;
+    text-align: center;
 `

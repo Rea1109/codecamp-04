@@ -6,19 +6,35 @@ export default function BoardListUI(props){
         <S.Wrapper>
             <S.MainTitle>베스트 게시글</S.MainTitle>
             <S.Header>
-                <S.Row>
+                <S.Row> 
                     {props.best?.fetchBoardsOfTheBest.map((el)=>(
                     <S.BoardCard key={el._id}>
-                        <S.BestTitle onClick={props.onClickGetBoard} id={el._id} >{el.title}</S.BestTitle>
-                        <S.BestWriter>{el.writer}</S.BestWriter>
-                        <S.BestDate>{el.createdAt}</S.BestDate>
+                        <S.BoardImg>
+                            <div>No image</div>
+                        </S.BoardImg>
+                        <S.BoardBody>
+                            <S.BestTitle onClick={props.onClickGetBoard} id={el._id} >{el.title}</S.BestTitle>
+                            <S.BestInfo>
+                                <S.Profile>
+                                    <S.BestWriter>
+                                        <S.ProfileImg src="/images/profile.png" />
+                                        <S.ProfileLabel>{el.writer}</S.ProfileLabel>
+                                    </S.BestWriter>
+                                    <S.BestDate>Date : {el.createdAt.split(":")[0].slice(0,10).replace(/-/gi,".")}</S.BestDate>
+                                </S.Profile>
+                                <S.Like>
+                                    <img src="/images/Vector.png" />
+                                    <S.LikeCount>{el.likeCount}</S.LikeCount>
+                                </S.Like>
+                            </S.BestInfo>
+                        </S.BoardBody>   
                     </S.BoardCard>
                     ))}
                 </S.Row>
             </S.Header>
             <div>
                 <S.Row>
-                    <S.SearchTitle type="text" placeholder="제목 검색" />
+                    <S.SearchTitle onChange={props.onChangeSearchInput} type="text" placeholder="제목 검색" />
                     <S.SearchDate type="text" placeholder="YY-MM-DD ~ YY-MM-DD" />
                     <S.SearchBtn>검색하기</S.SearchBtn>
                 </S.Row>
@@ -33,7 +49,7 @@ export default function BoardListUI(props){
                     <S.ColumnNumber>{idx+1}</S.ColumnNumber>
                     <S.ColumnTitle onClick={props.onClickGetBoard} id={el._id}>{el.title}</S.ColumnTitle>
                     <S.ColumnWriter>{el.writer}</S.ColumnWriter>
-                    <S.ColumnDate>{el.createdAt}</S.ColumnDate>
+                    <S.ColumnDate>{el.createdAt.split(":")[0].slice(0,10).replace(/-/gi,".")}</S.ColumnDate>
                 </S.BoardRow>
                 ))}
                 <S.Bottom>

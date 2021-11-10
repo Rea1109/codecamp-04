@@ -18,6 +18,18 @@ function solution(s) {
     }
 }
 
+function strArr(s) {
+    if(s.length !== 4 || s.length !== 6){
+        return false
+    }
+    
+    const answer = s.split('').filter((num)=>(isNaN(num)))
+
+    return answer.length === 0
+}
+
+
+
 //약수의 합
 function solution(n) {
     let sum = 0
