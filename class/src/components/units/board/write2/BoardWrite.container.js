@@ -1,14 +1,19 @@
 import BoardWriteUI from "./BoardWrite.presenter"
 import { useMutation } from '@apollo/client'
 import { useState } from 'react'
-import { CREATE_BOARD } from './BoardWrite.queries'
+import { CREATE_BOARD, UPDATE_BOARD } from './BoardWrite.queries'
+import {useRouter} from 'next/router'
 
-export default function BoardWrite(){
+export default function BoardWrite(props){
+    const router = useRouter()
+
     const [myWriter, setMyWriter] = useState("")
     const [myTitle, setMyTitle] = useState("")
     const [myContents, setMyContents] = useState("")
     const [myChange, setMyChange] = useState(true)
     const [createBoard] = useMutation(CREATE_BOARD)
+    const [updateBoard] = useMutation(UPDATE_BOARD)
+
 
 
     //event handler function
@@ -40,18 +45,32 @@ export default function BoardWrite(){
     }
 
     
-    const graphqlApi = async ()=>{
+    const addBoard = async ()=>{
+        alert("등록하기")
         const result = await createBoard({
             variables : {writer:myWriter ,title: myTitle, contents:myContents}
         })
+        console.log(result)
+        router.push(`/08-06-boards/${result.data.createBoard.number}`)
     }
+
+    const editBoard = async ()=>{
+        alert("수정하기")
+        const result = await updateBoard({
+            variables : {number: Number(router.query.myNumber) , writer:myWriter ,title: myTitle, contents:myContents}
+        })
+        router.push(`/08-06-boards/${router.query.myNumber}`)
+    }
+
     return(
       <BoardWriteUI 
         onChangeMyWriter={onChangeMyWriter} 
         onChangeMyTitle={onChangeMyTitle} 
         onChangeMyContents={onChangeMyContents} 
-        graphqlApi={graphqlApi}
+        addBoard={addBoard}
+        editBoard={editBoard}
         myChange = {myChange}
+        isEdit = {props.isEdit}
       />
     )
 

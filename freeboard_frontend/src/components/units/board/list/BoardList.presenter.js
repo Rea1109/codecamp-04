@@ -1,4 +1,5 @@
 import * as S from "./BoardList.styles"
+import { getDate } from "../../../../commons/libraries/utils"
 
 export default function BoardListUI(props){
     return(
@@ -20,7 +21,7 @@ export default function BoardListUI(props){
                                         <S.ProfileImg src="/images/profile.png" />
                                         <S.ProfileLabel>{el.writer}</S.ProfileLabel>
                                     </S.BestWriter>
-                                    <S.BestDate>Date : {el.createdAt.split(":")[0].slice(0,10).replace(/-/gi,".")}</S.BestDate>
+                                    <S.BestDate>Date : {getDate(el.createdAt)}</S.BestDate>
                                 </S.Profile>
                                 <S.Like>
                                     <img src="/images/Vector.png" />
@@ -36,24 +37,24 @@ export default function BoardListUI(props){
                 <S.Row>
                     <S.SearchTitle onChange={props.onChangeSearchInput} type="text" placeholder="제목 검색" />
                     <S.SearchDate type="text" placeholder="YY-MM-DD ~ YY-MM-DD" />
-                    <S.SearchBtn>검색하기</S.SearchBtn>
+                    <S.SearchBtn onClick={props.onClickSearch}>검색하기</S.SearchBtn>
                 </S.Row>
-                <S.BoardRow>
+                <S.BoardRowHead>
                     <S.ColumnNumber>번호</S.ColumnNumber>
-                    <S.ColumnTitle>제목</S.ColumnTitle>
+                    <S.ColumnTitleHead>제목</S.ColumnTitleHead>
                     <S.ColumnWriter>작성자</S.ColumnWriter>
                     <S.ColumnDate>날짜</S.ColumnDate>
-                </S.BoardRow>
+                </S.BoardRowHead>
                 {props.boards?.fetchBoards.map((el,idx)=>(
-                <S.BoardRow key={el._id}>
+                <S.BoardRow key={el._id} >
                     <S.ColumnNumber>{idx+1}</S.ColumnNumber>
                     <S.ColumnTitle onClick={props.onClickGetBoard} id={el._id}>{el.title}</S.ColumnTitle>
                     <S.ColumnWriter>{el.writer}</S.ColumnWriter>
-                    <S.ColumnDate>{el.createdAt.split(":")[0].slice(0,10).replace(/-/gi,".")}</S.ColumnDate>
+                    <S.ColumnDate>{getDate(el.createdAt)}</S.ColumnDate>
                 </S.BoardRow>
                 ))}
                 <S.Bottom>
-                    <S.AddBtn  onClick={props.onClickNew}>게시물등록하기</S.AddBtn>
+                    <S.AddBtn  onClick={props.onClickNew}>게시물 등록하기</S.AddBtn>
                 </S.Bottom>
             </div>
         </S.Wrapper>

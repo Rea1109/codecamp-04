@@ -27,7 +27,7 @@ export const Row = styled.div`
     justify-content: space-between;
 `
 
-export const BoardRow = styled.div`
+export const BoardRowHead = styled.div`
     width: 1200px;
     padding: 20px;
     display: flex;
@@ -35,6 +35,18 @@ export const BoardRow = styled.div`
     font-size: 18px;
     border-bottom: 1px solid #BDBDBD;
 `
+
+export const BoardRow = styled.div`
+    width: 1200px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    border-bottom: 1px solid #BDBDBD;
+
+    cursor: default;
+`
+
 
 export const Bottom = styled.div`
     width: 100%;
@@ -89,17 +101,21 @@ export const ColumnNumber = styled.div`
     font-size: 18px;
     color: #4F4F4F;
 `
+export const ColumnTitleHead = styled.div`
+    text-align: center;
+    width: 400px;
+    font-size: 18px;
+    color: #4F4F4F;
+    cursor: default;
+`
 
 export const ColumnTitle = styled.div`
     text-align: center;
     width: 400px;
     font-size: 18px;
     color: #4F4F4F;
-
-    cursor: default;
-
     :hover {
-        color: blue;
+        color: #FFD600;
         font-weight: bolder;
     }
 `
@@ -127,13 +143,14 @@ export const AddBtn = styled.button`
 
     :hover {
         background-color :#FFD600;
+        color: white;
     }
 `
 
 export const BestTitle = styled.div`
     cursor: default;
     :hover {
-        color: blue;
+        color: #FFD600;
         font-weight: bolder;
     }
     font-size: 18px;

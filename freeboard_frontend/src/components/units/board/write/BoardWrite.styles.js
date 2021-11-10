@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 
 export const Wrapper = styled.div`
     width: 1200px;
-    margin: 100px;
+    margin: 100px 100px 100px 250px;
     padding: 100px;
     display: flex;
     flex-direction: column;
@@ -125,14 +125,24 @@ export const Radio = styled.input`
     margin-right: 10px;
 `
 
-export const AddBoard = styled.div`
-
+export const BoardFunction = styled.div`
+    width: 100%;
+    display: flex;
+    padding: 0px 300px 0px 300px ;
+    justify-content: space-evenly;
 `
 
 export const ConfirmButton = styled.button`
     width: 179px;
     height: 52px;
     background-color: #FFD600;
+    border : none;
+`
+
+export const CancleButton = styled.button`
+    width: 179px;
+    height: 52px;
+    background-color: #BDBDBD;
     border : none;
 `
 
