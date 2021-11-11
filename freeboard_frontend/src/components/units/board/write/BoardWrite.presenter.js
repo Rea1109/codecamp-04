@@ -37,11 +37,11 @@ export default function BoardWriteUI(props){
                     <S.InputWrapper>
                         <S.Lavel>주소</S.Lavel>
                         <S.Addr>
-                            <S.Post type="text" readOnly value={props.zonecode} />
+                            <S.Post type="text" readOnly value={props.zipcode} />
                             <S.PostBtn type="button" value="우편번호검색" onClick={props.getAddr} />
                         </S.Addr>
-                        <S.AddrBox type="text" value={props.addr} readOnly={true} /> 
-                        <S.AddrBox type="text" id="extraAddr" placeholder="상세주소를 입력해주세요" />
+                        <S.AddrBox type="text" value={props.address} readOnly={true} /> 
+                        <S.AddrBox type="text" id="extraAddr" onClick={props.onChangeAddr} placeholder="상세주소를 입력해주세요" />
                     </S.InputWrapper>
                     <S.InputWrapper>
                         <S.Lavel>유튜브</S.Lavel>

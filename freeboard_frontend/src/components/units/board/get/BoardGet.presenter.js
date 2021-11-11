@@ -1,4 +1,5 @@
 import * as S from './BoardGet.styles'
+import { getDate } from '../../../../commons/libraries/utils'
 
 export default function BoardGetUI(props) {
 
@@ -10,12 +11,13 @@ export default function BoardGetUI(props) {
                         <S.PhotoIcon src="/images/profile.png" />
                         <S.Name>
                             <S.Maintext>{props.writer}</S.Maintext>
-                            <S.Subtext>Date : {props.createdAt}</S.Subtext>
+                            <S.Subtext>Date : {getDate(props.createdAt)}</S.Subtext>
                         </S.Name>
                     </S.Profile>
                     <S.HeadMenu>
                         <S.AddFileIcon src="/images/addFile.png" />
-                        <S.AddrIcon src="/images/ic_location_on-32px.png" />
+                        <S.AddrIcon onClick={props.onModal} src="/images/ic_location_on-32px.png" />
+                        <S.Modal isModal={props.isModal} >{props.address} {props.addressDetail}</S.Modal>
                     </S.HeadMenu>
                 </S.HeadWrapper>
                 <S.InnerWrapper>

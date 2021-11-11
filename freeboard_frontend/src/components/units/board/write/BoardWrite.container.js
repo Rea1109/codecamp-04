@@ -2,7 +2,7 @@ import {useRouter} from 'next/router'
 import {useMutation,useQuery} from '@apollo/client'
 import {useState} from 'react'
 import BoardWriteUI from './BoardWrite.presenter'
-import {CREATE_BOARD,UPDATE_BOARD,FETCH_BOARD} from './BoardWrite.queries'
+import {CREATE_BOARD,UPDATE_BOARD} from './BoardWrite.queries'
 
 export default function BoardWrite(props){
     const router = useRouter()
@@ -20,8 +20,9 @@ export default function BoardWrite(props){
     const [errorPassword, setErrorPassword] = useState('')
     const [errorTitle, setErrorTitle] = useState('')
     const [errorContent, setErrorContent] = useState('')
-    const [addr, setAddr] = useState('')
-    const [zonecode, setZonecode] = useState('')
+    const [address, setAddress] = useState('')
+    const [zipcode, setZipcode] = useState('')
+    const [addressDetail, setAddressDetail] = useState('')
 
     const onChangeWriter = (e)=>{
         setWriter(e.target.value)
@@ -59,6 +60,8 @@ export default function BoardWrite(props){
         }
     }
 
+    const onChangeAddr = (e) => (setAddressDetail(e.target.value))
+
     const check = (e)=>{
         let isCheck = true
 
@@ -94,11 +97,17 @@ export default function BoardWrite(props){
                             writer,
                             password,
                             title,
-                            contents:content
+                            contents:content,
+                            boardAddress:{
+                                zipcode,
+                                address,
+                                addressDetail
+                            }
                         }
                     }
                 })
                 alert("게시물 등록이 완료 되었습니다.")
+                console.log(result)
                 router.push(`/boards/${result.data.createBoard._id}`)
             }catch(error){
                 console.log(error.message)
@@ -161,8 +170,8 @@ export default function BoardWrite(props){
                 }
 
                 // // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                setZonecode(data.zonecode)
-                setAddr(addr)
+                setZipcode(data.zonecode)
+                setAddress(addr)
                 // // 커서를 상세주소 필드로 이동한다.
                 document.getElementById('extraAddr').focus()
             }
@@ -188,8 +197,9 @@ export default function BoardWrite(props){
             errorContent={errorContent}
             isEdit = {props.isEdit}
             getAddr = {getAddr}
-            addr = {addr}
-            zonecode ={zonecode}
+            onChangeAddr = {onChangeAddr}
+            address = {address}
+            zipcode ={zipcode}
         />
     )
 

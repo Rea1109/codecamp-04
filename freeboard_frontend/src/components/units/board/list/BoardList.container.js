@@ -7,17 +7,22 @@ import { FETCH_BOARDS, FETCH_BOARDS_BEST} from "./BoardList.queries"
 export default function BoardList(){
     const router = useRouter()
 
-    const [searchKeword,setSearchKeword] = useState('')
+    const [searchKeyword,setSearchKeyword] = useState('')
+    const [inputKeyword, setInputKeyword] = useState('')
 
-    const {data:boards} = useQuery(FETCH_BOARDS,{variables:{search:searchKeword}})
+    const {data:boards,refetch} = useQuery(FETCH_BOARDS,{variables:{search:searchKeyword}})
+
     const {data:best} = useQuery(FETCH_BOARDS_BEST)
 
     const onClickGetBoard = (e)=> (router.push(`/boards/${e.target.id}`))
     const onClickNew = ()=>(router.push(`/boards/new`))
-    const onChangeSearchInput = (e)=>(setSearchKeword(e.target.value))
+    const onChangeSearchInput = (e)=>{
+        setInputKeyword(e.target.value)
+    }
 
     const onClickSearch = ()=>{
-
+        setSearchKeyword(inputKeyword)
+        refetch({search:searchKeyword})
     }
     
     return (

@@ -2,9 +2,13 @@ import {useRouter} from 'next/router'
 import {useMutation, useQuery} from '@apollo/client'
 import {FETCH_BOARD,DELETE_BOARD, LIKE_BOARD,DISLIKE_BOARD} from './BoardGet.queries'
 import BoardGetUI from './BoardGet.presenter'
+import { useState } from 'react'
 
 export default function BoardGet() {
     const router = useRouter()
+
+    const [isModal,setIsModal] = useState(false)
+
     const {data} = useQuery(FETCH_BOARD,{variables:{boardId : router.query.boardId}})
     const [deleteBoard] = useMutation(DELETE_BOARD)
     const [likeBoard] = useMutation(LIKE_BOARD)
@@ -43,7 +47,13 @@ export default function BoardGet() {
             console.log(error.message)
         }
     }
-
+    
+    // const onModal = ()=> isModal?setIsModal(false):setIsModal(true)
+    
+    const onModal = ()=> {
+        isModal?setIsModal(false):setIsModal(true)
+        console.log(isModal)
+    }    
     return(
         <BoardGetUI
             id = {data?.fetchBoard._id} 
@@ -53,11 +63,16 @@ export default function BoardGet() {
             contents = {data?.fetchBoard.contents}
             likeCount = {data?.fetchBoard.likeCount}
             dislikeCount = {data?.fetchBoard.dislikeCount}
+            address = {data?.fetchBoard.boardAddress.address}
+            addressDetail = {data?.fetchBoard.boardAddress.addressDetail}
+            zipcode = {data?.fetchBoard.boardAddress.zipcode}
+            isModal = {isModal}
             onClickList = {onClickList}
             onClickUpdate ={onClickUpdate}
             onClickDelete = {onClickDelete}
             onClickLike ={onClickLike}
             onClickDislike ={onClickDislike}
+            onModal = {onModal}
         />
     )
 }

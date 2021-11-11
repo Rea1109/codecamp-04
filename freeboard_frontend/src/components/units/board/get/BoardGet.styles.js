@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { extendSchemaImpl } from "graphql/utilities/extendSchema";
 
 export const Wrapper = styled.div`
     padding: 100px;
@@ -159,4 +160,17 @@ export const Menu = styled.input`
     margin-right: 20px;
     background-color: white;
     border: 1px solid #BDBDBD;
+`
+
+export const Modal = styled.div`
+    position: absolute;
+    top: 170px;
+    background-color: #ffd820;
+    text-align: right;
+    padding: 7px 10px 0px 10px;
+    border-radius: 10px;
+    height: 32px;
+    font-size: 16px;
+    color: white;
+    display: ${(props)=>props.isModal?"block":"none"};
 `
