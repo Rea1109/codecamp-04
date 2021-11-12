@@ -1,8 +1,5 @@
-import NumberId from "../../../src/components/units/number/numberId/NumberId.container"
+import NumberId from "../../../src/components/units/number/numberId/NumberId.container";
 
-export default function DynamicRoutedNumberPage(){
-    return(
-        <NumberId />
-    )
-
+export default function DynamicRoutedNumberPage() {
+  return <NumberId />;
 }

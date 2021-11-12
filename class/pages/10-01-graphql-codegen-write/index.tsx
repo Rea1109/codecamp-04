@@ -1,6 +1,10 @@
 import { useMutation, gql } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import {
+  IMutation,
+  IMutationCreateProductArgs,
+} from "../../src/commons/types/generated/types";
 
 const CREATE_PRODUCT = gql`
   mutation createProduct(
@@ -22,21 +26,25 @@ export default function GraphqlMutationProductPage() {
   const [productName, setProductName] = useState("");
   const [productDetail, setProductDetail] = useState("");
   const [productPrice, setProductPrice] = useState(0);
-  const [createProduct] = useMutation(CREATE_PRODUCT);
 
-  const onChangeSeller = (e) => {
+  const [createProduct] = useMutation<
+    Pick<IMutation, "createProduct">,
+    IMutationCreateProductArgs
+  >(CREATE_PRODUCT);
+
+  const onChangeSeller = (e: any) => {
     setMySeller(e.target.value);
   };
 
-  const onChangeName = (e) => {
+  const onChangeName = (e: any) => {
     setProductName(e.target.value);
   };
 
-  const onChangeDetail = (e) => {
+  const onChangeDetail = (e: any) => {
     setProductDetail(e.target.value);
   };
 
-  const onChangePrice = (e) => {
+  const onChangePrice = (e: any) => {
     // setProductPrice(Number(e.target.value))
     setProductPrice(e.target.value);
   };
@@ -45,27 +53,20 @@ export default function GraphqlMutationProductPage() {
     try {
       const result = await createProduct({
         variables: {
-          // 만약 key 랑 value 의 변수명이 같을경우 생략 가능
-          // seller,
-          // createProductInput: {
-          //     name,
-          //     detail,
-          //     price
-          // }
           seller: mySeller,
           createProductInput: {
             name: productName,
             detail: productDetail,
-            price: Number(productPrice),
+            price: productPrice,
           },
         },
       });
-      alert(result.data.createProduct.message);
+      alert(result.data?.createProduct?.message);
       // router.push('/05-08-dynamic-product-read/'+result.data.createProduct._id)
       router.push(
-        `/05-08-dynamic-product-read/${result.data.createProduct._id}`
+        `/05-08-dynamic-product-read/${result.data?.createProduct?._id}`
       );
-    } catch (error) {
+    } catch (error: any) {
       console.log(error.message);
     }
   };

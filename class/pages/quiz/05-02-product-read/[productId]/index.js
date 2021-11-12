@@ -1,6 +1,5 @@
-import {useState} from 'react'
-import { useMutation, gql, useQuery } from '@apollo/client'
-import router, {useRouter} from 'next/router'
+import { gql, useQuery } from '@apollo/client'
+import  {useRouter} from 'next/router'
 
 const FETCH_PRODUCT = gql`
     query fetchProduct($productId:ID){
