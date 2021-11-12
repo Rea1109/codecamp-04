@@ -6,3 +6,12 @@ export function getDate(myDate){
 
     return `${year}.${month}.${day}` //2021-11-10
 }
+
+export function remakeTitle(title){
+    let newTitle = ""
+    if(title.length > 14){
+        return `${title.slice(0,10)}....`
+    }else{
+        return title
+    }
+}

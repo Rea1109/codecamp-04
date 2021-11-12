@@ -2,7 +2,6 @@ import * as S from './BoardWrite.styles'
 import Head from 'next/head'
 
 export default function BoardWriteUI(props){
-
     return(
         <>
             <Head>
@@ -15,7 +14,7 @@ export default function BoardWriteUI(props){
                     <S.AccountWrapper>
                         <S.Writer>
                             <S.Lavel>작성자</S.Lavel>
-                            <S.InputBox_2 type="text" placeholder="이름을 입력해주세요"  onChange={props.onChangeWriter} />
+                            <S.InputBox_2 type="text" placeholder="이름을 입력해주세요" defaultValue={props.data?.fetchBoard.writer} readOnly={props.isEdit} onChange={props.onChangeWriter} />
                             <S.ErrorText>{props.errorWriter}</S.ErrorText>
                         </S.Writer>
                         <S.Writer>
@@ -26,12 +25,12 @@ export default function BoardWriteUI(props){
                     </S.AccountWrapper>
                     <S.InputWrapper>
                         <S.Lavel>제목</S.Lavel>
-                        <S.InputBox_1 type="text" placeholder="제목을 작성해주세요" onChange={props.onChangeTitle}/>
+                        <S.InputBox_1 type="text" placeholder="제목을 작성해주세요" defaultValue={props.data?.fetchBoard.title} onChange={props.onChangeTitle}/>
                         <S.ErrorText>{props.errorTitle}</S.ErrorText>
                     </S.InputWrapper>
                     <S.InputWrapper>
                         <S.Lavel>내용</S.Lavel>
-                        <S.TextAreaBox type="text" placeholder="내용을 작성해주세요" onChange={props.onChangeContent} />
+                        <S.TextAreaBox type="text" placeholder="내용을 작성해주세요" defaultValue={props.data?.fetchBoard.contents} onChange={props.onChangeContent} />
                         <S.ErrorText>{props.errorContent}</S.ErrorText>
                     </S.InputWrapper>
                     <S.InputWrapper>

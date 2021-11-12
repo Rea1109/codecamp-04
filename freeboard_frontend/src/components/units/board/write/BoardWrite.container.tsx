@@ -1,13 +1,17 @@
 import {useRouter} from 'next/router'
 import {useMutation,useQuery} from '@apollo/client'
-import {useState} from 'react'
+import {ChangeEvent, useState} from 'react'
 import BoardWriteUI from './BoardWrite.presenter'
 import {CREATE_BOARD,UPDATE_BOARD} from './BoardWrite.queries'
 
-export default function BoardWrite(props){
+interface IBoardWriteProps {
+    isEdit:boolean,
+    data?:any
+}
+
+export default function BoardWrite(props:IBoardWriteProps){
     const router = useRouter()
 
-    // const {data} = useQuery(FETCH_BOARD,{variables:{boardId : router.query.boardId}})
     const [createBoard] = useMutation(CREATE_BOARD)
     const [updateBoard] = useMutation(UPDATE_BOARD) 
 
@@ -24,7 +28,7 @@ export default function BoardWrite(props){
     const [zipcode, setZipcode] = useState('')
     const [addressDetail, setAddressDetail] = useState('')
 
-    const onChangeWriter = (e)=>{
+    const onChangeWriter = (e:ChangeEvent<HTMLInputElement>)=>{
         setWriter(e.target.value)
         if(e.target.value !== ''){
             setErrorWriter('')
@@ -33,7 +37,7 @@ export default function BoardWrite(props){
         }
     }
 
-    const onChangePassword = (e) =>{
+    const onChangePassword = (e:ChangeEvent<HTMLInputElement>) =>{
         setPassword(e.target.value)
         if(e.target.value !== ''){
             setErrorPassword('')
@@ -42,7 +46,7 @@ export default function BoardWrite(props){
         }
     }
 
-    const onChangeTitle = (e) =>{
+    const onChangeTitle = (e:ChangeEvent<HTMLInputElement>) =>{
         setTitle(e.target.value)
         if(e.target.value !== ''){
             setErrorTitle('')
@@ -51,7 +55,7 @@ export default function BoardWrite(props){
         }
     }
 
-    const onChangeContent = (e) =>{
+    const onChangeContent = (e:ChangeEvent<HTMLInputElement>) =>{
         setContent(e.target.value)
         if(e.target.value !== ''){
             setErrorContent('')
@@ -60,9 +64,9 @@ export default function BoardWrite(props){
         }
     }
 
-    const onChangeAddr = (e) => (setAddressDetail(e.target.value))
+    const onChangeAddr = (e:ChangeEvent<HTMLInputElement>) => (setAddressDetail(e.target.value))
 
-    const check = (e)=>{
+    const check = ()=>{
         let isCheck = true
 
         if(writer === ''){
@@ -109,7 +113,7 @@ export default function BoardWrite(props){
                 alert("게시물 등록이 완료 되었습니다.")
                 console.log(result)
                 router.push(`/boards/${result.data.createBoard._id}`)
-            }catch(error){
+            }catch(error:any){
                 console.log(error.message)
                 alert("서버 에러")
             }
@@ -117,27 +121,44 @@ export default function BoardWrite(props){
     }
 
     const editBoard = async ()=>{
-        if(check()){
-            try{
-                const result = await updateBoard({
-                    variables:{
-                        boardId:router.query.boardId,
-                        password,
-                        updateBoardInput: {
-                            title,
-                            contents:content
-                        }
-                    }
-                })
-                alert("게시물 수정이 완료 되었습니다.")
-                router.push(`/boards/${result.data.updateBoard._id}`)
-            }catch(error){
-                console.log(error.message)
-                alert(error.message)
-            }
+        interface IUpdateBoardInput {
+            title? : string,
+            contents? : string
+        }
+
+        interface IUpdateVariables {
+            boardId: string,
+            password: string,
+            updateBoardInput : IUpdateBoardInput
+        }
+
+        const updateVariables :IUpdateVariables = {
+            boardId: String(router.query.boardId),
+            password: password,
+            updateBoardInput:{}
+        }
+
+        if(title !== "") updateVariables.updateBoardInput.title = title
+        if(content !== "") updateVariables.updateBoardInput.contents = content
+        if(!title && !content) {
+            updateVariables.updateBoardInput.title = props.data?.fetchBoard.writer
+            updateVariables.updateBoardInput.contents = props.data?.fetchBoard.contents
+        }
+
+        try{
+            const result = await updateBoard({
+                variables:updateVariables
+            })
+
+            alert("게시물 수정이 완료 되었습니다.")
+            router.push(`/boards/${result.data.updateBoard._id}`)
+        }catch(error:any){
+            console.log(error.message)
+            alert(error.message)
         }
     }
 
+    // 다음 우편 API
     const getAddr = ()=>{
         new daum.Postcode({
             oncomplete: function(data) {
@@ -180,10 +201,6 @@ export default function BoardWrite(props){
 
     return(
         <BoardWriteUI 
-            writer={writer}
-            password={password}
-            title={title}
-            content={content}
             onChangeWriter={onChangeWriter}
             onChangePassword={onChangePassword}
             onChangeTitle={onChangeTitle}
@@ -200,6 +217,7 @@ export default function BoardWrite(props){
             onChangeAddr = {onChangeAddr}
             address = {address}
             zipcode ={zipcode}
+            data = {props.data}
         />
     )
 

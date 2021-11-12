@@ -50,7 +50,7 @@ export const BoardRow = styled.div`
 
 export const Bottom = styled.div`
     width: 100%;
-    margin-top: 100px;
+    margin-top: 50px;
     display: flex;
     justify-content: flex-end;
 `

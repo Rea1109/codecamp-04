@@ -16,3 +16,36 @@ function solution(s){
 
 
 // 이상한 문자 만들기
+function solution(s) {
+    var answer = '';
+    
+    s.split(' ').map((str,idx)=>{
+        if(idx > 0) answer += " "
+        
+        for(let i=0; i<str.length; i++){
+            if(i%2 === 0){
+                answer += str[i].toUpperCase()
+            }else{
+                answer += str[i].toLowerCase()
+            }
+        }
+    })
+    return answer;
+}
+
+function solution(s) {
+    var answer = '';
+    
+    s.split(' ').map((str,idx)=>{
+        if(idx > 0) answer += " "
+        
+        for(let i=0; i<str.length; i++){
+            if(i%2 === 0){
+                answer += str[i].toUpperCase()
+            }else{
+                answer += str[i].toLowerCase()
+            }
+        }
+    })
+    return answer;
+}

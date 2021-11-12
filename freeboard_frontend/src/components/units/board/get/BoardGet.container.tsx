@@ -14,41 +14,39 @@ export default function BoardGet() {
     const [likeBoard] = useMutation(LIKE_BOARD)
     const [dislikeBoard] = useMutation(DISLIKE_BOARD)
 
-    const onClickLike = async (e)=>{
+    const onClickLike = async (e:any)=>{
         try{
             await likeBoard({
                 variables:{boardId:e.target.id},
                 refetchQueries: [{ query:FETCH_BOARD, variables:{boardId :e.target.id} }]
             })
-        }catch(error){
+        }catch(error:any){
             console.log(error.message)
         }
     }
 
-    const onClickDislike = async (e)=>{
+    const onClickDislike = async (e:any)=>{
         try{
             await dislikeBoard({
                 variables:{boardId:e.target.id},
                 refetchQueries: [{ query:FETCH_BOARD, variables:{boardId :e.target.id} }]
             })
-        }catch(error){
+        }catch(error:any){
             console.log(error.message)
         }
     }
 
     const onClickUpdate = ()=> (router.push(`/boards/${router.query.boardId}/edit`))
     const onClickList = ()=> (router.push(`/boards`))
-    const onClickDelete = async(e)=> {
+    const onClickDelete = async(e:any)=> {
         try{
             await deleteBoard({variables:{boardId : e.target.id}})
             alert("게시물이 삭제되었습니다.")
             router.push(`/boards`)
-        }catch(error){
+        }catch(error:any){
             console.log(error.message)
         }
     }
-    
-    // const onModal = ()=> isModal?setIsModal(false):setIsModal(true)
     
     const onModal = ()=> {
         isModal?setIsModal(false):setIsModal(true)
@@ -56,16 +54,8 @@ export default function BoardGet() {
     }    
     return(
         <BoardGetUI
-            id = {data?.fetchBoard._id} 
-            writer = {data?.fetchBoard.writer}
-            createdAt = {data?.fetchBoard.createdAt}
-            title = {data?.fetchBoard.title}
-            contents = {data?.fetchBoard.contents}
-            likeCount = {data?.fetchBoard.likeCount}
-            dislikeCount = {data?.fetchBoard.dislikeCount}
-            address = {data?.fetchBoard.boardAddress.address}
-            addressDetail = {data?.fetchBoard.boardAddress.addressDetail}
-            zipcode = {data?.fetchBoard.boardAddress.zipcode}
+            data = {data}
+            addr = {data?.fetchBoard.boardAddress}
             isModal = {isModal}
             onClickList = {onClickList}
             onClickUpdate ={onClickUpdate}

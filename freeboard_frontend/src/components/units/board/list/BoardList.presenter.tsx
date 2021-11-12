@@ -1,5 +1,5 @@
 import * as S from "./BoardList.styles"
-import { getDate } from "../../../../commons/libraries/utils"
+import { getDate, remakeTitle } from "../../../../commons/libraries/utils"
 
 export default function BoardListUI(props){
     return(
@@ -14,7 +14,8 @@ export default function BoardListUI(props){
                             <div>No image</div>
                         </S.BoardImg>
                         <S.BoardBody>
-                            <S.BestTitle onClick={props.onClickGetBoard} id={el._id} >{el.title}</S.BestTitle>
+                            <S.BestTitle onClick={props.onClickGetBoard} id={el._id} >{remakeTitle(el.title)}</S.BestTitle>
+                            {/* <S.BestTitle onClick={props.onClickGetBoard} id={el._id} >{el.title}</S.BestTitle> */}
                             <S.BestInfo>
                                 <S.Profile>
                                     <S.BestWriter>
