@@ -3,17 +3,14 @@ import { useMutation } from "@apollo/client";
 import { ChangeEvent, useState } from "react";
 import BoardWriteUI from "./BoardWrite.presenter";
 import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
-
-interface IBoardWriteProps {
-  isEdit: boolean;
-  data?: any;
-}
+import { IBoardWriteProps, IUpdateBoardInput } from "./BoardWrite.types";
+import { IMutation, IMutationCreateBoardArgs, IMutationUpdateBoardArgs } from "../../../../commons/types/generated/types";
 
 export default function BoardWrite(props: IBoardWriteProps) {
   const router = useRouter();
 
-  const [createBoard] = useMutation(CREATE_BOARD);
-  const [updateBoard] = useMutation(UPDATE_BOARD);
+  const [createBoard] = useMutation<Pick<IMutation,'createBoard'>,IMutationCreateBoardArgs>(CREATE_BOARD);
+  const [updateBoard] = useMutation<Pick<IMutation,'updateBoard'>,IMutationUpdateBoardArgs>(UPDATE_BOARD);
 
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
@@ -55,7 +52,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
     }
   };
 
-  const onChangeContent = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
     if (e.target.value !== "") {
       setErrorContent("");
@@ -96,7 +93,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const addBoard = async () => {
     if (check()) {
       try {
-        const result = await createBoard({
+        const result= await createBoard({
           variables: {
             createBoardInput: {
               writer,
@@ -113,7 +110,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
         });
         alert("게시물 등록이 완료 되었습니다.");
         console.log(result);
-        router.push(`/boards/${result.data.createBoard._id}`);
+        router.push(`/boards/${result.data?.createBoard._id}`);
       } catch (error: any) {
         console.log(error.message);
         alert("서버 에러");
@@ -122,38 +119,26 @@ export default function BoardWrite(props: IBoardWriteProps) {
   };
 
   const editBoard = async () => {
-    interface IUpdateBoardInput {
-      title?: string;
-      contents?: string;
-    }
-
-    interface IUpdateVariables {
-      boardId: string;
-      password: string;
-      updateBoardInput: IUpdateBoardInput;
-    }
-
-    const updateVariables: IUpdateVariables = {
-      boardId: String(router.query.boardId),
-      password: password,
-      updateBoardInput: {},
-    };
-
-    if (title !== "") updateVariables.updateBoardInput.title = title;
-    if (content !== "") updateVariables.updateBoardInput.contents = content;
+    const updateBoardInput: IUpdateBoardInput = {};
     if (!title && !content) {
-      updateVariables.updateBoardInput.title = props.data?.fetchBoard.writer;
-      updateVariables.updateBoardInput.contents =
-        props.data?.fetchBoard.contents;
+      alert("수정 내용이 없습니다.");
+      return;
     }
+
+    if (title !== "") updateBoardInput.title = title;
+    if (content !== "") updateBoardInput.contents = content;
 
     try {
       const result = await updateBoard({
-        variables: updateVariables,
+        variables: {
+          boardId: String(router.query.boardId),
+          password: password,
+          updateBoardInput: updateBoardInput,
+        },
       });
 
       alert("게시물 수정이 완료 되었습니다.");
-      router.push(`/boards/${result.data.updateBoard._id}`);
+      router.push(`/boards/${result.data?.updateBoard._id}`);
     } catch (error: any) {
       console.log(error.message);
       alert(error.message);
@@ -161,8 +146,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
   };
 
   // 다음 우편 API
-  interface IDaum {}
-
   const getAddr = () => {
     new daum.Postcode({
       oncomplete: function (data: any) {

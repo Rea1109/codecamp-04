@@ -19,7 +19,7 @@ export default function BoardWrite(props: IBoardWriteProps){
 
 
 
-    //event handler function
+    // event handler function
     const onChangeMyWriter = (e: ChangeEvent<HTMLInputElement>)=>{
         setMyWriter(e.target.value)
         if(e.target.value !== '' && myTitle !== '' && myContents !==''){
@@ -69,7 +69,7 @@ export default function BoardWrite(props: IBoardWriteProps){
         if(myTitle !== "") myVariables.title = myTitle
         if(myContents !== "") myVariables.contents = myContents
 
-        const result = await updateBoard({
+        await updateBoard({
             variables : myVariables
         })
         router.push(`/09-02-boards2/${router.query.myNumber}`)
