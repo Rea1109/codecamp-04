@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 import { IBoardGetStylesProps } from "./BoardGet.types";
 
 export const Wrapper = styled.div`
-  padding: 100px;
+  padding-top: 100px;
+  padding-bottom: 50px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
