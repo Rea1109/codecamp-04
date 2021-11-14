@@ -15,6 +15,7 @@ interface ICommentGetUI {
   input: string[];
   isEdit: boolean;
   updateId: string;
+  textCount: number;
 }
 
 export default function CommentGetUI(props: ICommentGetUI) {
@@ -48,12 +49,12 @@ export default function CommentGetUI(props: ICommentGetUI) {
             </S.CommnetWriter>
             <S.CommentContent>
               <S.Content
-                placeholder="내용"
+                placeholder="댓글은 띄어쓰기 포함 최대 50자까지 작성 가능합니다."
                 onChange={props.onChangeContents}
                 value={props.input[2]}
               />
               <S.CommentContentFooter>
-                <S.TextCount>0 / 100</S.TextCount>
+                <S.TextCount>{props.textCount} / 50</S.TextCount>
                 <S.AddBtn onClick={props.addComment}>등록하기</S.AddBtn>
               </S.CommentContentFooter>
             </S.CommentContent>
@@ -87,12 +88,12 @@ export default function CommentGetUI(props: ICommentGetUI) {
                 </S.CommnetWriter>
                 <S.CommentContent>
                   <S.Content
-                    placeholder="내용"
+                    placeholder="댓글은 띄어쓰기 포함 최대 50자까지 작성 가능합니다."
                     onChange={props.onChangeContents}
                     defaultValue={el.contents}
                   />
                   <S.CommentContentFooter>
-                    <S.TextCount>0 / 100</S.TextCount>
+                    <S.TextCount>{props.textCount} / 50</S.TextCount>
                     <S.UpdateBtn onClick={props.onClickUpdate}>
                       수정하기
                     </S.UpdateBtn>

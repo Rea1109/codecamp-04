@@ -25,6 +25,7 @@ export default function CommentPage() {
   const [contents, setContents] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [updateId, setUpdateId] = useState("");
+  const [textCount, setTextCount] = useState(0);
 
   const { data } = useQuery<
     Pick<IQuery, "fetchBoardComments">,
@@ -54,13 +55,16 @@ export default function CommentPage() {
     setWriter(event.target.value);
   const onChangePassword = (event: ChangeEvent<HTMLInputElement>) =>
     setPassword(event.target.value);
-  const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) =>
+  const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setContents(event.target.value);
+    setTextCount(event.target.value.length);
+  };
 
   const addComment = async () => {
     if (!writer) return alert("작성자를 입력해주세요.");
     if (!password) return alert("비밀번호를 입력해주세요.");
     if (!contents) return alert("댓글을 작성해주세요.");
+    if (textCount > 50) return alert("댓글내용은 최대 50글자 입니다.");
 
     try {
       await createComment({
@@ -86,6 +90,7 @@ export default function CommentPage() {
       setWriter("");
       setPassword("");
       setContents("");
+      setTextCount(0);
     } catch (error: any) {
       console.log(error.message);
       alert("서버에러 관리자에게 문의");
@@ -121,6 +126,8 @@ export default function CommentPage() {
   };
 
   const onClickUpdate = () => {
+    if (textCount > 50) return alert("댓글내용은 최대 50글자 입니다.");
+
     interface IUpdateCommentValue {
       contents?: string;
       rating?: number;
@@ -150,6 +157,7 @@ export default function CommentPage() {
       setIsEdit(false);
       setPassword("");
       setContents("");
+      setTextCount(0);
     } catch (error) {
       console.log(error.message);
       alert("에러");
@@ -169,6 +177,7 @@ export default function CommentPage() {
       input={[writer, password, contents]}
       isEdit={isEdit}
       updateId={updateId}
+      textCount={textCount}
     />
   );
 }
