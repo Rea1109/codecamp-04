@@ -41,7 +41,7 @@ export const InfoInput = styled.input`
 
 export const CommentContent = styled.div`
   border: 1px solid #bdbdbd;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 `;
 
 export const Content = styled.textarea`

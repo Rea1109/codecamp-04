@@ -8,7 +8,7 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
       <S.BoardWrapper>
         <S.HeadWrapper>
           <S.Profile>
-            <S.PhotoIcon src="/images/profile.png" />
+            <S.PhotoIcon src="/images/board/profile.png" />
             <S.Name>
               <S.Maintext>{props.data?.fetchBoard.writer}</S.Maintext>
               <S.Subtext>
@@ -17,10 +17,10 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
             </S.Name>
           </S.Profile>
           <S.HeadMenu>
-            <S.AddFileIcon src="/images/addFile.png" />
+            <S.AddFileIcon src="/images/voard/addFile.png" />
             <S.AddrIcon
               onClick={props.onModal}
-              src="/images/ic_location_on-32px.png"
+              src="/images/board/location.png"
             />
             {props.data?.fetchBoard.boardAddress && (
               <S.Modal isModal={props.isModal}>
@@ -38,13 +38,13 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
           <S.Title>{props.data?.fetchBoard.title}</S.Title>
           <S.ContentWrapper>
             <S.ContentImg>
-              <S.Img src="/images/image.png" />
+              <S.Img src="/images/board/boardImg.png" />
             </S.ContentImg>
             <S.Content>
               <S.Text>{props.data?.fetchBoard.contents}</S.Text>
             </S.Content>
             <S.ContentVideo>
-              <S.Video src="/images/video.png" />
+              <S.Video src="/images/board/video.png" />
             </S.ContentVideo>
           </S.ContentWrapper>
         </S.InnerWrapper>
@@ -53,7 +53,7 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
             <S.LikeImg
               onClick={props.onClickLike}
               id={props.data?.fetchBoard._id}
-              src="/images/Vector.png"
+              src="/images/board/like.png"
             />
             <S.LikeCount>{props.data?.fetchBoard.likeCount}</S.LikeCount>
           </S.Like>
@@ -61,7 +61,7 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
             <S.LikeImg
               onClick={props.onClickDislike}
               id={props.data?.fetchBoard._id}
-              src="/images/dislike.png"
+              src="/images/board/dislike.png"
             />
             <S.DisLikeCount>
               {props.data?.fetchBoard.dislikeCount}

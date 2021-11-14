@@ -20,13 +20,13 @@ export default function BoardListUI(props: IBoardListUIProps) {
                 <S.BestInfo>
                   <S.Profile>
                     <S.BestWriter>
-                      <S.ProfileImg src="/images/profile.png" />
+                      <S.ProfileImg src="/images/board/profile.png" />
                       <S.ProfileLabel>{el.writer}</S.ProfileLabel>
                     </S.BestWriter>
                     <S.BestDate>Date : {getDate(el.createdAt)}</S.BestDate>
                   </S.Profile>
                   <S.Like>
-                    <img src="/images/Vector.png" />
+                    <img src="/images/board/like.png" />
                     <S.LikeCount>{el.likeCount}</S.LikeCount>
                   </S.Like>
                 </S.BestInfo>

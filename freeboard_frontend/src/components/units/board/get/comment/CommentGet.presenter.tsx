@@ -7,10 +7,14 @@ interface ICommentGetUI {
   data?: Pick<IQuery, "fetchBoardComments">;
   addComment: () => void;
   onClickDelete: (event: MouseEvent) => void;
+  onClickUpdateView: (event: MouseEvent) => void;
+  onClickUpdate: () => void;
   onChangeWriter: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   input: string[];
+  isEdit: boolean;
+  updateId: string;
 }
 
 export default function CommentGetUI(props: ICommentGetUI) {
@@ -18,71 +22,122 @@ export default function CommentGetUI(props: ICommentGetUI) {
     <S.Wrapper>
       <S.CommentWrapper>
         <S.Head>
-          <S.HeadImg src="/images/comment.png" />
+          <S.HeadImg src="/images/board/comment.png" />
           <S.HeadLable>댓글</S.HeadLable>
         </S.Head>
-        <S.CommnetWriter>
-          <S.InfoInput
-            type="text"
-            placeholder="작성자"
-            onChange={props.onChangeWriter}
-            value={props.input[0]}
-          />
-          <S.InfoInput
-            type="password"
-            placeholder="비밀번호"
-            onChange={props.onChangePassword}
-            value={props.input[1]}
-          />
-          <S.Star src="/images/on-star.png" />
-          <S.Star src="/images/on-star.png" />
-          <S.Star src="/images/on-star.png" />
-          <S.Star src="/images/on-star.png" />
-          <S.Star src="/images/on-star.png" />
-        </S.CommnetWriter>
-        <S.CommentContent>
-          <S.Content
-            placeholder="내용"
-            onChange={props.onChangeContents}
-            value={props.input[2]}
-          />
-          <S.CommentContentFooter>
-            <S.TextCount>0 / 100</S.TextCount>
-            <S.AddBtn onClick={props.addComment}>등록하기</S.AddBtn>
-            {/* <S.UpdateBtn>수정하기</S.UpdateBtn> */}
-          </S.CommentContentFooter>
-        </S.CommentContent>
-        {props.data?.fetchBoardComments.map((el: any) => (
-          <S.CommentList key={el._id}>
-            <S.Comment>
-              <S.WriterImg src="/images/profile.png" />
-              <S.CommentInner>
-                <S.CommentHead>
-                  <S.CommnetWriterLabel>{el.writer}</S.CommnetWriterLabel>
-                  <S.Star src="/images/on-star.png" />
-                  <S.Star src="/images/on-star.png" />
-                  <S.Star src="/images/on-star.png" />
-                  <S.Star src="/images/on-star.png" />
-                  <S.Star src="/images/on-star.png" />
-                </S.CommentHead>
-                <S.CommentBody>{el.contents}</S.CommentBody>
-                <S.CommentDate>{getDate(el.createdAt)}</S.CommentDate>
-              </S.CommentInner>
-            </S.Comment>
-            <S.CommnetMenu>
-              <S.MenuBtn>
-                <S.MenuImg src="/images/pen.png" />
-              </S.MenuBtn>
-              <S.MenuBtn>
-                <S.MenuImg
-                  src="/images/delete.png"
-                  onClick={props.onClickDelete}
-                  id={el._id}
-                />
-              </S.MenuBtn>
-            </S.CommnetMenu>
-          </S.CommentList>
-        ))}
+        {!props.isEdit && (
+          <>
+            <S.CommnetWriter>
+              <S.InfoInput
+                type="text"
+                placeholder="작성자"
+                onChange={props.onChangeWriter}
+                value={props.input[0]}
+              />
+              <S.InfoInput
+                type="password"
+                placeholder="비밀번호"
+                onChange={props.onChangePassword}
+                value={props.input[1]}
+              />
+              <S.Star src="/images/board/on-star.png" />
+              <S.Star src="/images/board/on-star.png" />
+              <S.Star src="/images/board/on-star.png" />
+              <S.Star src="/images/board/on-star.png" />
+              <S.Star src="/images/board/on-star.png" />
+            </S.CommnetWriter>
+            <S.CommentContent>
+              <S.Content
+                placeholder="내용"
+                onChange={props.onChangeContents}
+                value={props.input[2]}
+              />
+              <S.CommentContentFooter>
+                <S.TextCount>0 / 100</S.TextCount>
+                <S.AddBtn onClick={props.addComment}>등록하기</S.AddBtn>
+              </S.CommentContentFooter>
+            </S.CommentContent>
+          </>
+        )}
+
+        {/* 수정하기 화면 */}
+        {props.isEdit &&
+          props.data?.fetchBoardComments
+            .filter((el) => el._id === props.updateId)
+            .map((el: any) => (
+              <div key={el._id}>
+                <S.CommnetWriter>
+                  <S.InfoInput
+                    type="text"
+                    placeholder="작성자"
+                    onChange={props.onChangeWriter}
+                    value={el.writer}
+                    readOnly
+                  />
+                  <S.InfoInput
+                    type="password"
+                    placeholder="비밀번호"
+                    onChange={props.onChangePassword}
+                  />
+                  <S.Star src="/images/board/on-star.png" />
+                  <S.Star src="/images/board/on-star.png" />
+                  <S.Star src="/images/board/on-star.png" />
+                  <S.Star src="/images/board/on-star.png" />
+                  <S.Star src="/images/board/on-star.png" />
+                </S.CommnetWriter>
+                <S.CommentContent>
+                  <S.Content
+                    placeholder="내용"
+                    onChange={props.onChangeContents}
+                    defaultValue={el.contents}
+                  />
+                  <S.CommentContentFooter>
+                    <S.TextCount>0 / 100</S.TextCount>
+                    <S.UpdateBtn onClick={props.onClickUpdate}>
+                      수정하기
+                    </S.UpdateBtn>
+                  </S.CommentContentFooter>
+                </S.CommentContent>
+              </div>
+            ))}
+
+        {props.data?.fetchBoardComments
+          .filter((el) => el._id !== props.updateId)
+          .map((el: any) => (
+            <S.CommentList key={el._id}>
+              <S.Comment>
+                <S.WriterImg src="/images/board/profile.png" />
+                <S.CommentInner>
+                  <S.CommentHead>
+                    <S.CommnetWriterLabel>{el.writer}</S.CommnetWriterLabel>
+                    <S.Star src="/images/board/on-star.png" />
+                    <S.Star src="/images/board/on-star.png" />
+                    <S.Star src="/images/board/on-star.png" />
+                    <S.Star src="/images/board/on-star.png" />
+                    <S.Star src="/images/board/on-star.png" />
+                  </S.CommentHead>
+                  <S.CommentBody>{el.contents}</S.CommentBody>
+                  <S.CommentDate>{getDate(el.createdAt)}</S.CommentDate>
+                </S.CommentInner>
+              </S.Comment>
+              <S.CommnetMenu>
+                <S.MenuBtn>
+                  <S.MenuImg
+                    src="/images/board/pen.png"
+                    onClick={props.onClickUpdateView}
+                    id={el._id}
+                  />
+                </S.MenuBtn>
+                <S.MenuBtn>
+                  <S.MenuImg
+                    src="/images/board/delete.png"
+                    onClick={props.onClickDelete}
+                    id={el._id}
+                  />
+                </S.MenuBtn>
+              </S.CommnetMenu>
+            </S.CommentList>
+          ))}
       </S.CommentWrapper>
     </S.Wrapper>
   );

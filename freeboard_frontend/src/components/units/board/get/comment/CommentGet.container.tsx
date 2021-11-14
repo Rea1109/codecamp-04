@@ -5,6 +5,7 @@ import {
   IMutation,
   IMutationCreateBoardCommentArgs,
   IMutationDeleteBoardCommentArgs,
+  IMutationUpdateBoardCommentArgs,
   IQuery,
   IQueryFetchBoardCommentsArgs,
 } from "../../../../../commons/types/generated/types";
@@ -13,6 +14,7 @@ import {
   FETCH_BOARD_COMMENTS,
   CREATE_BOARD_COMMENT,
   DELETE_BOARD_COMMENT,
+  UPDATE_BOARD_COMMENT,
 } from "./CommentGet.queries";
 
 export default function CommentPage() {
@@ -21,6 +23,8 @@ export default function CommentPage() {
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
   const [contents, setContents] = useState("");
+  const [isEdit, setIsEdit] = useState(false);
+  const [updateId, setUpdateId] = useState("");
 
   const { data } = useQuery<
     Pick<IQuery, "fetchBoardComments">,
@@ -31,13 +35,6 @@ export default function CommentPage() {
     },
   });
 
-  const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) =>
-    setWriter(event.target.value);
-  const onChangePassword = (event: ChangeEvent<HTMLInputElement>) =>
-    setPassword(event.target.value);
-  const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) =>
-    setContents(event.target.value);
-
   const [createComment] = useMutation<
     Pick<IMutation, "createBoardComment">,
     IMutationCreateBoardCommentArgs
@@ -47,6 +44,18 @@ export default function CommentPage() {
     Pick<IMutation, "deleteBoardComment">,
     IMutationDeleteBoardCommentArgs
   >(DELETE_BOARD_COMMENT);
+
+  const [updateComment] = useMutation<
+    Pick<IMutation, "updateBoardComment">,
+    IMutationUpdateBoardCommentArgs
+  >(UPDATE_BOARD_COMMENT);
+
+  const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) =>
+    setWriter(event.target.value);
+  const onChangePassword = (event: ChangeEvent<HTMLInputElement>) =>
+    setPassword(event.target.value);
+  const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) =>
+    setContents(event.target.value);
 
   const addComment = async () => {
     if (!writer) return alert("작성자를 입력해주세요.");
@@ -84,12 +93,12 @@ export default function CommentPage() {
   };
 
   const onClickDelete = async (event: MouseEvent) => {
-    setPassword(String(prompt("비밀번호를 입력해주세요.")));
+    const inputPassword = prompt("비밀번호를 입력해주세요");
     try {
       await deleteComment({
         variables: {
           boardCommentId: String(event.target.id),
-          password,
+          password: inputPassword,
         },
         refetchQueries: [
           {
@@ -101,9 +110,49 @@ export default function CommentPage() {
         ],
       });
       alert("댓글이 삭제되었습니다.");
-      setPassword("");
     } catch (error: any) {
       alert(error.message);
+    }
+  };
+
+  const onClickUpdateView = (event: MouseEvent) => {
+    setIsEdit(true);
+    setUpdateId(event.target.id);
+  };
+
+  const onClickUpdate = () => {
+    interface IUpdateCommentValue {
+      contents?: string;
+      rating?: number;
+    }
+
+    const updateCommentInput: IUpdateCommentValue = { rating: 5 };
+    if (contents !== "") updateCommentInput.contents = contents;
+
+    try {
+      updateComment({
+        variables: {
+          password,
+          boardCommentId: updateId,
+          updateBoardCommentInput: updateCommentInput,
+        },
+        refetchQueries: [
+          {
+            query: FETCH_BOARD_COMMENTS,
+            variables: {
+              boardId: String(router.query.boardId),
+            },
+          },
+        ],
+      });
+      alert("댓글 수정 완료");
+      setUpdateId("");
+      setIsEdit(false);
+      setPassword("");
+      setContents("");
+    } catch (error) {
+      console.log(error.message);
+      alert("에러");
     }
   };
 
@@ -112,10 +161,14 @@ export default function CommentPage() {
       data={data}
       addComment={addComment}
       onClickDelete={onClickDelete}
+      onClickUpdateView={onClickUpdateView}
+      onClickUpdate={onClickUpdate}
       onChangeWriter={onChangeWriter}
       onChangePassword={onChangePassword}
       onChangeContents={onChangeContents}
       input={[writer, password, contents]}
+      isEdit={isEdit}
+      updateId={updateId}
     />
   );
 }
