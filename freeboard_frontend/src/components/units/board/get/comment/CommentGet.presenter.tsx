@@ -52,6 +52,7 @@ export default function CommentGetUI(props: ICommentGetUI) {
                 placeholder="댓글은 띄어쓰기 포함 최대 50자까지 작성 가능합니다."
                 onChange={props.onChangeContents}
                 value={props.input[2]}
+                maxLength={50}
               />
               <S.CommentContentFooter>
                 <S.TextCount>{props.textCount} / 50</S.TextCount>
@@ -91,6 +92,7 @@ export default function CommentGetUI(props: ICommentGetUI) {
                     placeholder="댓글은 띄어쓰기 포함 최대 50자까지 작성 가능합니다."
                     onChange={props.onChangeContents}
                     defaultValue={el.contents}
+                    maxLength={50}
                   />
                   <S.CommentContentFooter>
                     <S.TextCount>{props.textCount} / 50</S.TextCount>
