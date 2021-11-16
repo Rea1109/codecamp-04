@@ -28,6 +28,7 @@ export const HeadImg = styled.img`
 export const HeadLable = styled.div``;
 
 export const CommnetWriter = styled.div`
+  margin-top: 20px;
   margin-bottom: 20px;
 `;
 
@@ -41,7 +42,6 @@ export const InfoInput = styled.input`
 
 export const CommentContent = styled.div`
   border: 1px solid #bdbdbd;
-  margin-bottom: 50px;
 `;
 
 export const Content = styled.textarea`
@@ -75,6 +75,16 @@ export const AddBtn = styled.button`
   background-color: black;
 `;
 
+export const CancleBtn = styled.button`
+  width: 92px;
+  height: 52px;
+  margin-right: 10px;
+  font-size: 16px;
+  color: white;
+  border: 1px solid black;
+  background-color: black;
+`;
+
 export const UpdateBtn = styled.button`
   width: 91px;
   height: 52px;
@@ -88,6 +98,7 @@ export const CommentList = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+  margin-bottom: 20px;
   border-bottom: 1px solid #bdbdbd;
 `;
 
