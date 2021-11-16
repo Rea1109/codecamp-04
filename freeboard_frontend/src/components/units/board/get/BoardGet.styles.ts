@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import ReactPlayer from "react-player";
 import { IBoardGetStylesProps } from "./BoardGet.types";
 
 export const Wrapper = styled.div`
@@ -81,10 +82,7 @@ export const ContentVideo = styled.div`
   margin-bottom: 80px;
 `;
 
-export const Video = styled.img`
-  width: 486px;
-  height: 240px;
-`;
+export const Video = styled(ReactPlayer)``;
 
 export const Maintext = styled.div`
   font-size: 24px;

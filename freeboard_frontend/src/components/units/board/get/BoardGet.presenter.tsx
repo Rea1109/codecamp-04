@@ -17,14 +17,13 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
             </S.Name>
           </S.Profile>
           <S.HeadMenu>
-            <S.AddFileIcon src="/images/voard/addFile.png" />
+            <S.AddFileIcon src="/images/board/addFile.png" />
             <S.AddrIcon
               onClick={props.onModal}
               src="/images/board/location.png"
             />
             {props.data?.fetchBoard.boardAddress && (
               <S.Modal isModal={props.isModal}>
-                {/* {props.addr?.address} {props.addr?.addressDetail} */}
                 {props.data?.fetchBoard.boardAddress?.address}{" "}
                 {props.data?.fetchBoard.boardAddress?.addressDetail}
               </S.Modal>
@@ -44,7 +43,15 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
               <S.Text>{props.data?.fetchBoard.contents}</S.Text>
             </S.Content>
             <S.ContentVideo>
-              <S.Video src="/images/board/video.png" />
+              <S.Video
+                url="https://youtu.be/OL1pJrrFAIg"
+                width={486}
+                height={270}
+                muted={true}
+                playing={true}
+                controls={true}
+                loop={true}
+              />
             </S.ContentVideo>
           </S.ContentWrapper>
         </S.InnerWrapper>
