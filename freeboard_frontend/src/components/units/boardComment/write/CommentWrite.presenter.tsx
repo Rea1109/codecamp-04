@@ -14,10 +14,11 @@ interface ICommentWriterUI {
   isEdit?: boolean;
   el?: any;
   contents: string;
+  writer: string;
+  password: string;
 }
 
 export default function CommentWriteUI(props: ICommentWriterUI) {
-  console.log(props.isEdit);
   return (
     <S.Wrapper>
       <S.CommentWrapper>
@@ -30,27 +31,32 @@ export default function CommentWriteUI(props: ICommentWriterUI) {
         <S.CommnetWriter>
           <S.InfoInput
             type="text"
-            placeholder="작성자"
             onChange={props.onChangeWriter}
             readOnly={props.el}
-            defaultValue={props.isEdit ? props.el?.writer : ""}
+            placeholder={props.isEdit ? props.el.writer : "작성자"}
+            value={props.writer}
           />
           <S.InfoInput
             type="password"
             placeholder="비밀번호"
             onChange={props.onChangePassword}
+            value={props.password}
           />
           <Rate
             onChange={props.onChangeRate}
-            defaultValue={props.isEdit ? props.el.rating : 0}
+            defaultValue={props.isEdit ? props.el.rating : props.rate}
           />
         </S.CommnetWriter>
         <S.CommentContent>
           <S.Content
-            placeholder="댓글은 띄어쓰기 포함 최대 50자까지 작성 가능합니다."
             onChange={props.onChangeContents}
             maxLength={49}
-            defaultValue={props.isEdit ? props.el?.contents : ""}
+            placeholder={
+              props.isEdit
+                ? props.el?.contents
+                : "댓글은 띄어쓰기 포함 최대 50자까지 작성 가능합니다."
+            }
+            value={props.contents}
           />
           <S.CommentContentFooter>
             <S.TextCount> {props.contents.length}/ 50</S.TextCount>

@@ -1,8 +1,16 @@
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
+  padding-top: 100px;
+  padding-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const BoardWrapper = styled.div`
   width: 1200px;
-  margin: 100px 100px 200px 250px;
+  /* margin: 100px 100px 200px 250px; */
   padding: 100px;
   display: flex;
   flex-direction: column;
@@ -39,7 +47,7 @@ export const InputWrapper = styled.div`
 `;
 export const Writer = styled.div``;
 
-export const Lavel = styled.div`
+export const Label = styled.div`
   font-size: 16px;
   margin-right: 20px;
   margin-bottom: 15px;
@@ -97,6 +105,7 @@ export const Addr = styled.div`
 
 export const ImgWrapper = styled.div`
   display: flex;
+  margin-bottom: 10px;
 `;
 
 export const ImgBox = styled.div`
@@ -105,8 +114,8 @@ export const ImgBox = styled.div`
   background-color: #bdbdbd;
   border: none;
   margin-right: 20px;
-  padding-top: 30px;
-  padding-left: 5px;
+  text-align: center;
+  line-height: 78px;
 `;
 
 export const SettingWrapper = styled.div`
@@ -115,12 +124,12 @@ export const SettingWrapper = styled.div`
 
 export const Setting = styled.div`
   display: flex;
+  margin-right: 10px;
 `;
 
 export const Radio = styled.input`
-  width: 12px;
-  height: 12px;
   margin-right: 10px;
+  margin-top: 8px;
 `;
 
 export const BoardFunction = styled.div`

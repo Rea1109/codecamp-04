@@ -84,6 +84,18 @@ export const ContentVideo = styled.div`
 
 export const Video = styled(ReactPlayer)``;
 
+export const VideoAlt = styled.div`
+  width: 486px;
+  height: 270px;
+  background-color: #bdbdbd;
+  text-align: center;
+  line-height: 270px;
+  color: white;
+  font-size: 42px;
+  font-weight: bolder;
+  border-radius: 15px;
+`;
+
 export const Maintext = styled.div`
   font-size: 24px;
 `;

@@ -17,4 +17,9 @@ module.exports = {
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
   },
+  settings: {
+    react: {
+      version: "리액트 버전 no.",
+    },
+  },
 };

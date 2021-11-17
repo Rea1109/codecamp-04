@@ -75,7 +75,10 @@ export default function CommentWrite(props: ICommentWrite) {
         ],
       });
       alert("댓글이 등록 되었습니다.");
-      console.log(writer, password, rate, contents, props.isEdit);
+      setWriter("");
+      setContents("");
+      setPassword("");
+      setRate(0);
     } catch (error: any) {
       console.log(error.message);
       alert("서버에러 관리자에게 문의");
@@ -89,6 +92,7 @@ export default function CommentWrite(props: ICommentWrite) {
     }
 
     const updateCommentInput: IUpdateCommentValue = {};
+    if (!contents && !rate) return alert("수정된 내용이 없습니다.");
     if (contents !== "") updateCommentInput.contents = contents;
     if (rate !== 0) updateCommentInput.rating = rate;
     console.log(props.el?._id);
@@ -130,6 +134,8 @@ export default function CommentWrite(props: ICommentWrite) {
       isEdit={props.isEdit}
       el={props.el}
       contents={contents}
+      writer={writer}
+      password={password}
     />
   );
 }

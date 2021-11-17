@@ -4,18 +4,34 @@ import { ChangeEvent, useState } from "react";
 import BoardWriteUI from "./BoardWrite.presenter";
 import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
 import { IBoardWriteProps, IUpdateBoardInput } from "./BoardWrite.types";
-import { IMutation, IMutationCreateBoardArgs, IMutationUpdateBoardArgs } from "../../../../commons/types/generated/types";
+import {
+  IMutation,
+  IMutationCreateBoardArgs,
+  IMutationUpdateBoardArgs,
+} from "../../../../commons/types/generated/types";
+
+declare const window: Window &
+  typeof globalThis & {
+    daum: any;
+  };
 
 export default function BoardWrite(props: IBoardWriteProps) {
   const router = useRouter();
 
-  const [createBoard] = useMutation<Pick<IMutation,'createBoard'>,IMutationCreateBoardArgs>(CREATE_BOARD);
-  const [updateBoard] = useMutation<Pick<IMutation,'updateBoard'>,IMutationUpdateBoardArgs>(UPDATE_BOARD);
+  const [createBoard] = useMutation<
+    Pick<IMutation, "createBoard">,
+    IMutationCreateBoardArgs
+  >(CREATE_BOARD);
+  const [updateBoard] = useMutation<
+    Pick<IMutation, "updateBoard">,
+    IMutationUpdateBoardArgs
+  >(UPDATE_BOARD);
 
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [youtubeUrl, setYoutubeUrl] = useState("");
 
   const [errorWriter, setErrorWriter] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
@@ -64,6 +80,9 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const onChangeAddr = (e: ChangeEvent<HTMLInputElement>) =>
     setAddressDetail(e.target.value);
 
+  const onChangeYoutube = (e: ChangeEvent<HTMLInputElement>) =>
+    setYoutubeUrl(e.target.value);
+
   const check = () => {
     let isCheck = true;
 
@@ -93,13 +112,14 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const addBoard = async () => {
     if (check()) {
       try {
-        const result= await createBoard({
+        const result = await createBoard({
           variables: {
             createBoardInput: {
               writer,
               password,
               title,
               contents: content,
+              youtubeUrl,
               boardAddress: {
                 zipcode,
                 address,
@@ -109,7 +129,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
           },
         });
         alert("게시물 등록이 완료 되었습니다.");
-        console.log(result);
         router.push(`/boards/${result.data?.createBoard._id}`);
       } catch (error: any) {
         console.log(error.message);
@@ -119,14 +138,27 @@ export default function BoardWrite(props: IBoardWriteProps) {
   };
 
   const editBoard = async () => {
-    const updateBoardInput: IUpdateBoardInput = {};
-    if (!title && !content) {
+    const boardAddress = {};
+    const updateBoardInput: IUpdateBoardInput = {
+      // boardAddress: {},
+    };
+    if (!title && !content && !youtubeUrl && !zipcode) {
       alert("수정 내용이 없습니다.");
       return;
     }
 
-    if (title !== "") updateBoardInput.title = title;
-    if (content !== "") updateBoardInput.contents = content;
+    if (title) updateBoardInput.title = title;
+    if (content) updateBoardInput.contents = content;
+    if (youtubeUrl) updateBoardInput.youtubeUrl = youtubeUrl;
+
+    if (zipcode) {
+      updateBoardInput.boardAddress = boardAddress;
+
+      if (zipcode) updateBoardInput.boardAddress.zipcode = zipcode;
+      if (address) updateBoardInput.boardAddress.address = address;
+      if (addressDetail)
+        updateBoardInput.boardAddress.addressDetail = addressDetail;
+    }
 
     try {
       const result = await updateBoard({
@@ -138,6 +170,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
       });
 
       alert("게시물 수정이 완료 되었습니다.");
+      console.log(result);
       router.push(`/boards/${result.data?.updateBoard._id}`);
     } catch (error: any) {
       console.log(error.message);
@@ -147,43 +180,32 @@ export default function BoardWrite(props: IBoardWriteProps) {
 
   // 다음 우편 API
   const getAddr = () => {
-    new daum.Postcode({
+    new window.daum.Postcode({
       oncomplete: function (data: any) {
         let addr = ""; // 주소 변수
         let extraAddr = ""; // 참고항목 변수
 
-        // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
         if (data.userSelectedType === "R") {
-          // 사용자가 도로명 주소를 선택했을 경우
           addr = data.roadAddress;
         } else {
-          // 사용자가 지번 주소를 선택했을 경우(J)
           addr = data.jibunAddress;
         }
 
-        // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
         if (data.userSelectedType === "R") {
-          // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-          // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
           if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
             extraAddr += data.bname;
           }
-          // 건물명이 있고, 공동주택일 경우 추가한다.
           if (data.buildingName !== "" && data.apartment === "Y") {
             extraAddr +=
               extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
           }
-          // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
           if (extraAddr !== "") {
             extraAddr = " (" + extraAddr + ")";
           }
         }
-
-        // // 우편번호와 주소 정보를 해당 필드에 넣는다.
         setZipcode(data.zonecode);
         setAddress(addr);
-        // // 커서를 상세주소 필드로 이동한다.
-        document.getElementById("extraAddr").focus();
+        document.getElementById("extraAddr")?.focus();
       },
     }).open();
   };
@@ -194,6 +216,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
       onChangePassword={onChangePassword}
       onChangeTitle={onChangeTitle}
       onChangeContent={onChangeContent}
+      onChangeYoutube={onChangeYoutube}
       addBoard={addBoard}
       editBoard={editBoard}
       getBoard={() => router.push(`/boards/${router.query.boardId}`)}

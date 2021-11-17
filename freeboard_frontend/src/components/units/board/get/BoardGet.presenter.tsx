@@ -43,15 +43,19 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
               <S.Text>{props.data?.fetchBoard.contents}</S.Text>
             </S.Content>
             <S.ContentVideo>
-              <S.Video
-                url="https://youtu.be/OL1pJrrFAIg"
-                width={486}
-                height={270}
-                muted={true}
-                playing={true}
-                controls={true}
-                loop={true}
-              />
+              {props.data?.fetchBoard.youtubeUrl ? (
+                <S.Video
+                  url={props.data?.fetchBoard.youtubeUrl}
+                  width={486}
+                  height={270}
+                  muted={true}
+                  playing={true}
+                  controls={true}
+                  loop={true}
+                />
+              ) : (
+                <S.VideoAlt>No Video</S.VideoAlt>
+              )}
             </S.ContentVideo>
           </S.ContentWrapper>
         </S.InnerWrapper>
@@ -59,7 +63,6 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
           <S.Like>
             <S.LikeImg
               onClick={props.onClickLike}
-              id={props.data?.fetchBoard._id}
               src="/images/board/like.png"
             />
             <S.LikeCount>{props.data?.fetchBoard.likeCount}</S.LikeCount>
@@ -67,8 +70,7 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
           <S.Like>
             <S.LikeImg
               onClick={props.onClickDislike}
-              id={props.data?.fetchBoard._id}
-              src="/images/board/dislike.png"
+              src={"/images/board/dislike.png"}
             />
             <S.DisLikeCount>
               {props.data?.fetchBoard.dislikeCount}
@@ -79,12 +81,7 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
       <S.MenuWrapper>
         <S.Menu type="button" value="목록으로" onClick={props.onClickList} />
         <S.Menu type="button" value="수정하기" onClick={props.onClickUpdate} />
-        <S.Menu
-          type="button"
-          id={props.data?.fetchBoard._id}
-          value="삭제하기"
-          onClick={props.onClickDelete}
-        />
+        <S.Menu type="button" value="삭제하기" onClick={props.onClickDelete} />
       </S.MenuWrapper>
     </S.Wrapper>
   );

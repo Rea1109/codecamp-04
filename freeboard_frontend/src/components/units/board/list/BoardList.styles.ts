@@ -1,6 +1,13 @@
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
+  padding-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const ListWrapper = styled.div`
   width: 1200px;
   margin: 200px;
   display: flex;
@@ -69,7 +76,7 @@ export const BoardBody = styled.div`
 `;
 
 export const SearchTitle = styled.input`
-  width: 776px;
+  width: 700px;
   height: 52px;
   padding: 20px;
   border: none;
@@ -163,14 +170,8 @@ export const BestDate = styled.div`
   font-size: 12px;
   color: #828282;
 `;
-export const BoardImg = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+export const BoardImg = styled.img`
   background-color: #bdbdbd;
-  color: white;
-  font-size: 20px;
-  font-weight: bolder;
   width: 100%;
   height: 150px;
   border-radius: 15px 15px 0px 0px;

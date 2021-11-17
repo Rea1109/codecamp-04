@@ -157,3 +157,10 @@ export const Star = styled.img`
   width: 20px;
   height: 20px;
 `;
+
+export const ModalInput = styled.input`
+  width: 300px;
+  height: 45px;
+  border: 1px solid #bdbdbd;
+  margin-top: 20px;
+`;

@@ -7,26 +7,48 @@ import {
   DISLIKE_BOARD,
 } from "./BoardGet.queries";
 import BoardGetUI from "./BoardGet.presenter";
-import { MouseEvent, useState } from "react";
-import { IMutation, IMutationDeleteBoardArgs, IMutationDislikeBoardArgs, IMutationLikeBoardArgs, IQuery, IQueryFetchBoardArgs } from "../../../../commons/types/generated/types";
+import { useState } from "react";
+import {
+  IMutation,
+  IMutationDeleteBoardArgs,
+  IMutationDislikeBoardArgs,
+  IMutationLikeBoardArgs,
+  IQuery,
+  IQueryFetchBoardArgs,
+} from "../../../../commons/types/generated/types";
 
 export default function BoardGet() {
   const router = useRouter();
   const [isModal, setIsModal] = useState(false);
 
-  const { data } = useQuery<Pick<IQuery,'fetchBoard'>,IQueryFetchBoardArgs>(FETCH_BOARD, {
-    variables: { boardId: String(router.query.boardId) },
-  });
-  const [deleteBoard] = useMutation<Pick<IMutation,'deleteBoard'>,IMutationDeleteBoardArgs>(DELETE_BOARD);
-  const [likeBoard] = useMutation<Pick<IMutation,'likeBoard'>,IMutationLikeBoardArgs>(LIKE_BOARD);
-  const [dislikeBoard] = useMutation<Pick<IMutation,'dislikeBoard'>,IMutationDislikeBoardArgs>(DISLIKE_BOARD);
+  const { data } = useQuery<Pick<IQuery, "fetchBoard">, IQueryFetchBoardArgs>(
+    FETCH_BOARD,
+    {
+      variables: { boardId: String(router.query.boardId) },
+    }
+  );
+  const [deleteBoard] = useMutation<
+    Pick<IMutation, "deleteBoard">,
+    IMutationDeleteBoardArgs
+  >(DELETE_BOARD);
+  const [likeBoard] = useMutation<
+    Pick<IMutation, "likeBoard">,
+    IMutationLikeBoardArgs
+  >(LIKE_BOARD);
+  const [dislikeBoard] = useMutation<
+    Pick<IMutation, "dislikeBoard">,
+    IMutationDislikeBoardArgs
+  >(DISLIKE_BOARD);
 
-  const onClickLike = async (e: MouseEvent) => {
+  const onClickLike = async () => {
     try {
       await likeBoard({
-        variables: { boardId: e.target.id },
+        variables: { boardId: String(router.query.boardId) },
         refetchQueries: [
-          { query: FETCH_BOARD, variables: { boardId: e.target.id } },
+          {
+            query: FETCH_BOARD,
+            variables: { boardId: String(router.query.boardId) },
+          },
         ],
       });
     } catch (error: any) {
@@ -34,12 +56,15 @@ export default function BoardGet() {
     }
   };
 
-  const onClickDislike = async (e: MouseEvent) => {
+  const onClickDislike = async () => {
     try {
       await dislikeBoard({
-        variables: { boardId: e.target.id },
+        variables: { boardId: String(router.query.boardId) },
         refetchQueries: [
-          { query: FETCH_BOARD, variables: { boardId: e.target.id } },
+          {
+            query: FETCH_BOARD,
+            variables: { boardId: String(router.query.boardId) },
+          },
         ],
       });
     } catch (error: any) {
@@ -47,9 +72,11 @@ export default function BoardGet() {
     }
   };
 
-  const onClickDelete = async (e: MouseEvent<HTMLInputElement>) => {
+  const onClickDelete = async () => {
     try {
-      await deleteBoard({ variables: { boardId: e.target.id } });
+      await deleteBoard({
+        variables: { boardId: String(router.query.boardId) },
+      });
       alert("게시물이 삭제되었습니다.");
       router.push(`/boards`);
     } catch (error: any) {

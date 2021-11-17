@@ -1,14 +1,22 @@
 import { ChangeEvent } from "react";
-import { IQuery} from "../../../../commons/types/generated/types"
+import { IQuery } from "../../../../commons/types/generated/types";
 
 export interface IBoardWriteProps {
   isEdit?: boolean;
-  data?: Pick<IQuery,'fetchBoard'>;
+  data?: Pick<IQuery, "fetchBoard">;
+}
+
+export interface IBoardAddress {
+  zipcode?: string;
+  address?: string;
+  addressDetail?: string;
 }
 
 export interface IUpdateBoardInput {
   title?: string;
   contents?: string;
+  youtubeUrl?: string;
+  boardAddress?: IBoardAddress;
 }
 
 export interface IBoardWriteUIProps {
@@ -16,6 +24,7 @@ export interface IBoardWriteUIProps {
   onChangePassword: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeTitle: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeContent: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  onChangeYoutube: (e: ChangeEvent<HTMLInputElement>) => void;
   addBoard: () => void;
   editBoard: () => void;
   getBoard: () => void;
@@ -28,5 +37,5 @@ export interface IBoardWriteUIProps {
   onChangeAddr: (e: ChangeEvent<HTMLInputElement>) => void;
   address: string;
   zipcode: string;
-  data?: Pick<IQuery,'fetchBoard'>;
+  data?: Pick<IQuery, "fetchBoard">;
 }
