@@ -1,6 +1,7 @@
 import * as S from "./BoardGet.styles";
 import { getDate } from "../../../../commons/libraries/utils";
 import { IBoardGetUIProps } from "./BoardGet.types";
+import { Tooltip } from "antd";
 
 export default function BoardGetUI(props: IBoardGetUIProps) {
   return (
@@ -17,19 +18,27 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
             </S.Name>
           </S.Profile>
           <S.HeadMenu>
-            <S.AddFileIcon src="/images/board/addFile.png" />
-            <S.AddrIcon
-              onClick={props.onModal}
-              src="/images/board/location.png"
-            />
+            {props.data?.fetchBoard.youtubeUrl && (
+              <Tooltip title={props.data?.fetchBoard.youtubeUrl}>
+                <S.AddFileIcon src="/images/board/addFile.png" />
+              </Tooltip>
+            )}
+
+            {!props.data?.fetchBoard.youtubeUrl && (
+              <Tooltip title="등록된 링크가 없습니다.">
+                <S.AddFileIcon src="/images/board/addFile.png" />
+              </Tooltip>
+            )}
+
             {props.data?.fetchBoard.boardAddress && (
-              <S.Modal isModal={props.isModal}>
-                {props.data?.fetchBoard.boardAddress?.address}{" "}
-                {props.data?.fetchBoard.boardAddress?.addressDetail}
-              </S.Modal>
+              <Tooltip title={props.data?.fetchBoard.boardAddress?.address}>
+                <S.AddrIcon src="/images/board/location.png" />
+              </Tooltip>
             )}
             {!props.data?.fetchBoard.boardAddress && (
-              <S.Modal isModal={props.isModal}>등록된 주소가 없습니다.</S.Modal>
+              <Tooltip title="등록된 주소가 없습니다.">
+                <S.AddrIcon src="/images/board/location.png" />
+              </Tooltip>
             )}
           </S.HeadMenu>
         </S.HeadWrapper>
@@ -49,9 +58,9 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
                   width={486}
                   height={270}
                   muted={true}
-                  playing={true}
+                  // playing={true}
                   controls={true}
-                  loop={true}
+                  // loop={true}
                 />
               ) : (
                 <S.VideoAlt>No Video</S.VideoAlt>
@@ -79,7 +88,7 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
         </S.LikeWrapper>
       </S.BoardWrapper>
       <S.MenuWrapper>
-        <S.Menu type="button" value="목록으로" onClick={props.onClickList} />
+        {/* <S.Menu type="button" value="목록으로" onClick={props.onClickList} /> */}
         <S.Menu type="button" value="수정하기" onClick={props.onClickUpdate} />
         <S.Menu type="button" value="삭제하기" onClick={props.onClickDelete} />
       </S.MenuWrapper>

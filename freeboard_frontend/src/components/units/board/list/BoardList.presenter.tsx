@@ -9,12 +9,12 @@ export default function BoardListUI(props: IBoardListUIProps) {
   return (
     <S.Wrapper>
       <S.ListWrapper>
-        <S.MainTitle>베스트 게시글</S.MainTitle>
+        <S.MainTitle>Best of Board</S.MainTitle>
         <S.Header>
           <S.Row>
             {props.best?.fetchBoardsOfTheBest.map((el: any) => (
               <S.BoardCard key={el._id}>
-                <S.BoardImg src="/images/board/boardImg.png" />
+                <S.BoardImg src="/images/board/bg-3.jpg" />
                 <S.BoardBody>
                   <S.BestTitle onClick={props.onClickGetBoard} id={el._id}>
                     {remakeTitle(el.title)}

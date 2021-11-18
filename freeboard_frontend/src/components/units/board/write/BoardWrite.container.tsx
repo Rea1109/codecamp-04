@@ -9,6 +9,7 @@ import {
   IMutationCreateBoardArgs,
   IMutationUpdateBoardArgs,
 } from "../../../../commons/types/generated/types";
+import { Modal } from "antd";
 
 declare const window: Window &
   typeof globalThis & {
@@ -128,22 +129,20 @@ export default function BoardWrite(props: IBoardWriteProps) {
             },
           },
         });
-        alert("게시물 등록이 완료 되었습니다.");
+        Modal.success({ title: "게시물 등록이 완료 되었습니다." });
         router.push(`/boards/${result.data?.createBoard._id}`);
       } catch (error: any) {
         console.log(error.message);
-        alert("서버 에러");
+        Modal.error({ title: "error.message" });
       }
     }
   };
 
   const editBoard = async () => {
     const boardAddress = {};
-    const updateBoardInput: IUpdateBoardInput = {
-      // boardAddress: {},
-    };
+    const updateBoardInput: IUpdateBoardInput = {};
     if (!title && !content && !youtubeUrl && !zipcode) {
-      alert("수정 내용이 없습니다.");
+      Modal.warning({ title: "수정 내용이 없습니다." });
       return;
     }
 
@@ -169,12 +168,12 @@ export default function BoardWrite(props: IBoardWriteProps) {
         },
       });
 
-      alert("게시물 수정이 완료 되었습니다.");
+      Modal.success({ title: "게시물 수정이 완료 되었습니다." });
       console.log(result);
       router.push(`/boards/${result.data?.updateBoard._id}`);
     } catch (error: any) {
       console.log(error.message);
-      alert(error.message);
+      Modal.error({ title: error.message });
     }
   };
 

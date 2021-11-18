@@ -12,6 +12,7 @@ import {
 } from "../../../../commons/types/generated/types";
 import { useRouter } from "next/router";
 import { useState, ChangeEvent, Dispatch, SetStateAction } from "react";
+import { Modal } from "antd";
 
 interface ICommentWrite {
   isEdit?: boolean;
@@ -49,10 +50,10 @@ export default function CommentWrite(props: ICommentWrite) {
   };
 
   const onClickAdd = async () => {
-    if (!writer) return alert("작성자를 입력해주세요.");
-    if (!password) return alert("비밀번호를 입력해주세요.");
-    if (!contents) return alert("댓글을 작성해주세요.");
-    if (rate === 0) return alert("별점을 등록해주세요");
+    if (!writer) return Modal.warning({ title: "작성자를 입력해주세요." });
+    if (!password) return Modal.warning({ title: "비밀번호를 입력해주세요." });
+    if (!contents) return Modal.warning({ title: "내용을 입력해주세요." });
+    if (rate === 0) return Modal.warning({ title: "별점을 입력해주세요." });
 
     try {
       await createComment({
@@ -74,14 +75,14 @@ export default function CommentWrite(props: ICommentWrite) {
           },
         ],
       });
-      alert("댓글이 등록 되었습니다.");
+      Modal.success({ title: "댓글이 등록 되었습니다." });
       setWriter("");
       setContents("");
       setPassword("");
       setRate(0);
     } catch (error: any) {
       console.log(error.message);
-      alert("서버에러 관리자에게 문의");
+      Modal.error({ title: "서버에러 관리자에게 문의" });
     }
   };
 
@@ -92,7 +93,8 @@ export default function CommentWrite(props: ICommentWrite) {
     }
 
     const updateCommentInput: IUpdateCommentValue = {};
-    if (!contents && !rate) return alert("수정된 내용이 없습니다.");
+    if (!contents && !rate)
+      return Modal.warning({ title: "수정된 내용이 없습니다." });
     if (contents !== "") updateCommentInput.contents = contents;
     if (rate !== 0) updateCommentInput.rating = rate;
     console.log(props.el?._id);
@@ -112,10 +114,10 @@ export default function CommentWrite(props: ICommentWrite) {
           },
         ],
       });
-      alert("댓글 수정 완료");
+      Modal.success({ title: "댓글 수정 완료" });
       props.setEdit?.(false);
     } catch (error) {
-      error instanceof Error && alert(error?.message);
+      error instanceof Error && Modal.error({ title: error?.message });
     }
   };
 

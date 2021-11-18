@@ -60,7 +60,7 @@ export default function CommentWriteUI(props: ICommentWriterUI) {
           />
           <S.CommentContentFooter>
             <S.TextCount> {props.contents.length}/ 50</S.TextCount>
-            <div>
+            <S.BtnWrapper>
               {!props.isEdit ? (
                 <S.AddBtn onClick={props.onClickAdd}>등록하기</S.AddBtn>
               ) : (
@@ -73,7 +73,7 @@ export default function CommentWriteUI(props: ICommentWriterUI) {
                   </S.UpdateBtn>
                 </>
               )}
-            </div>
+            </S.BtnWrapper>
           </S.CommentContentFooter>
         </S.CommentContent>
       </S.CommentWrapper>

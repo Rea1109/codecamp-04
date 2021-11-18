@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  background-color: #fcfbfb;
 `;
 
 export const CommentWrapper = styled.div`
@@ -22,10 +23,16 @@ export const Head = styled.div`
 `;
 
 export const HeadImg = styled.img`
-  margin-right: 10px;
+  margin-right: 20px;
+  padding-top: 8px;
+  width: 28px;
+  height: 34px;
 `;
 
-export const HeadLable = styled.div``;
+export const HeadLable = styled.div`
+  font-family: "mainFont";
+  font-size: 25px;
+`;
 
 export const CommnetWriter = styled.div`
   margin-top: 20px;
@@ -36,20 +43,25 @@ export const InfoInput = styled.input`
   width: 180px;
   height: 52px;
   padding-left: 20px;
-  border: 1px solid #bdbdbd;
+  border: 1px solid #c7bba9;
+  border-radius: 5px;
   margin-right: 30px;
 `;
 
 export const CommentContent = styled.div`
-  border: 1px solid #bdbdbd;
+  border: 1px solid #c7bba9;
+  border-radius: 5px;
+  background-color: white;
+  padding: 5px;
 `;
 
 export const Content = styled.textarea`
-  width: 1197px;
+  width: 1190px;
   height: 117px;
   resize: none;
   padding-left: 20px;
   padding-top: 20px;
+  padding-bottom: 0px;
   border: none;
   font-size: 16px;
 `;
@@ -57,6 +69,7 @@ export const Content = styled.textarea`
 export const CommentContentFooter = styled.div`
   display: flex;
   justify-content: space-between;
+  background-color: white;
 `;
 
 export const TextCount = styled.div`
@@ -66,32 +79,41 @@ export const TextCount = styled.div`
   color: #bdbdbd;
 `;
 
+export const BtnWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+`;
+
 export const AddBtn = styled.button`
-  width: 92px;
-  height: 52px;
-  font-size: 16px;
+  width: 90px;
+  height: 32px;
+  font-size: 14px;
   color: white;
-  border: 1px solid black;
-  background-color: black;
+  border: 1px solid #c7bba9;
+  border-radius: 5px;
+  background-color: #c7bba9;
 `;
 
 export const CancleBtn = styled.button`
-  width: 92px;
-  height: 52px;
-  margin-right: 10px;
-  font-size: 16px;
+  width: 90px;
+  height: 32px;
+  font-size: 14px;
+  font-weight: bolder;
   color: white;
-  border: 1px solid black;
-  background-color: black;
+  border: 1px solid #c7bba9;
+  border-radius: 5px;
+  background-color: #bdbdbd;
 `;
 
 export const UpdateBtn = styled.button`
-  width: 91px;
-  height: 52px;
-  font-size: 16px;
-  color: black;
-  background-color: #ffd600;
-  border: none;
+  width: 90px;
+  height: 32px;
+  font-size: 14px;
+  color: white;
+  margin-left: 10px;
+  border: 1px solid #c7bba9;
+  border-radius: 5px;
+  background-color: #c7bba9;
 `;
 
 export const CommentList = styled.div`

@@ -7,7 +7,6 @@ import {
   DISLIKE_BOARD,
 } from "./BoardGet.queries";
 import BoardGetUI from "./BoardGet.presenter";
-import { useState } from "react";
 import {
   IMutation,
   IMutationDeleteBoardArgs,
@@ -16,10 +15,10 @@ import {
   IQuery,
   IQueryFetchBoardArgs,
 } from "../../../../commons/types/generated/types";
+import { Modal } from "antd";
 
 export default function BoardGet() {
   const router = useRouter();
-  const [isModal, setIsModal] = useState(false);
 
   const { data } = useQuery<Pick<IQuery, "fetchBoard">, IQueryFetchBoardArgs>(
     FETCH_BOARD,
@@ -77,26 +76,21 @@ export default function BoardGet() {
       await deleteBoard({
         variables: { boardId: String(router.query.boardId) },
       });
-      alert("게시물이 삭제되었습니다.");
+      Modal.success({ title: "게시물이 삭제되었습니다." });
       router.push(`/boards`);
     } catch (error: any) {
       console.log(error.message);
     }
   };
 
-  const onModal = () => {
-    isModal ? setIsModal(false) : setIsModal(true);
-  };
   return (
     <BoardGetUI
       data={data}
-      isModal={isModal}
       onClickList={() => router.push(`/boards`)}
       onClickUpdate={() => router.push(`/boards/${router.query.boardId}/edit`)}
       onClickDelete={onClickDelete}
       onClickLike={onClickLike}
       onClickDislike={onClickDislike}
-      onModal={onModal}
     />
   );
 }

@@ -1,15 +1,15 @@
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
-  padding-bottom: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #fcfbfb;
 `;
 
 export const ListWrapper = styled.div`
   width: 1200px;
-  margin: 200px;
+  margin: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,6 +20,7 @@ export const MainTitle = styled.div`
   margin-bottom: 100px;
   font-size: 36px;
   font-weight: bolder;
+  font-family: "mainFont";
 `;
 
 export const Header = styled.div`
@@ -147,7 +148,7 @@ export const AddBtn = styled.button`
   background-color: white;
 
   :hover {
-    background-color: #ffd600;
+    background-color: #c7bba9;
     color: white;
   }
 `;

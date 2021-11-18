@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import ReactPlayer from "react-player";
-import { IBoardGetStylesProps } from "./BoardGet.types";
 
 export const Wrapper = styled.div`
   padding-top: 100px;
@@ -9,6 +8,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  background-color: #fcfbfb;
 `;
 
 export const BoardWrapper = styled.div`
@@ -61,7 +61,6 @@ export const ContentWrapper = styled.div`
 export const Title = styled.div`
   margin: 30px 0px 30px 0px;
   font-size: 36px;
-  font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
 `;
 
@@ -167,22 +166,12 @@ export const MenuWrapper = styled.div`
 
 export const Menu = styled.input`
   width: 179px;
-  height: 45px;
+  height: 52px;
   margin-right: 20px;
-  background-color: white;
-  border: 1px solid #bdbdbd;
-`;
-
-export const Modal = styled.div`
-  position: absolute;
-  top: 170px;
-  background-color: #ffd820;
-  text-align: right;
-  padding: 7px 10px 0px 10px;
+  border: none;
   border-radius: 10px;
-  height: 32px;
-  font-size: 16px;
+  background-color: #c7bba9;
   color: white;
-  display: ${(props: IBoardGetStylesProps) =>
-    props.isModal ? "block" : "none"};
+  font-size: 15px;
+  font-weight: bolder;
 `;

@@ -142,15 +142,25 @@ export const BoardFunction = styled.div`
 export const ConfirmButton = styled.button`
   width: 179px;
   height: 52px;
-  background-color: #ffd600;
+  margin-right: 20px;
   border: none;
+  border-radius: 10px;
+  background-color: #c7bba9;
+  color: white;
+  font-size: 15px;
+  font-weight: bolder;
 `;
 
 export const CancleButton = styled.button`
   width: 179px;
   height: 52px;
-  background-color: #bdbdbd;
+  margin-right: 20px;
   border: none;
+  border-radius: 10px;
+  background-color: #bdbdbd;
+  color: white;
+  font-size: 15px;
+  font-weight: bolder;
 `;
 
 export const ErrorText = styled.div`
