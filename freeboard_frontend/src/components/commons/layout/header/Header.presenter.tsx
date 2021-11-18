@@ -1,9 +1,12 @@
 import * as S from "./Header.styles";
-import { Drawer, Modal } from "antd";
+import { Modal } from "antd";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 export default function HeaderUI() {
-  const [visible, setVisible] = useState(false);
+  const router = useRouter();
+
+  // const [visible, setVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
@@ -19,25 +22,37 @@ export default function HeaderUI() {
     setIsModalVisible(false);
   };
 
-  const showDrawer = () => {
-    setVisible(true);
-  };
-  const onClose = () => {
-    setVisible(false);
-  };
+  // const showDrawer = () => {
+  //   setVisible(true);
+  // };
+  // const onClose = () => {
+  //   setVisible(false);
+  // };
 
-  const onClickAdd = () => {
-    Modal.success({ title: "Welcome" });
-  };
+  // const onClickAdd = () => {
+  //   Modal.success({ title: "Welcome" });
+  // };
 
   return (
     <S.Header>
-      <S.Label>FreeBoard</S.Label>
+      <S.Label>
+        {" "}
+        <S.Logo style={{ color: "gold", marginRight: "10px" }}>
+          &#91; &#93;
+        </S.Logo>{" "}
+        FreeBoard
+      </S.Label>
       <S.BtnWrapper>
         <S.SigninBtn onClick={showModal}>Sign in</S.SigninBtn>
-        <S.SignupBtn onClick={showDrawer}>Sign up</S.SignupBtn>
+        <S.SignupBtn
+          onClick={() => {
+            router.push("/signup");
+          }}
+        >
+          Sign up
+        </S.SignupBtn>
       </S.BtnWrapper>
-      <Drawer
+      {/* <Drawer
         title="Welcome FreeBoard !"
         placement="right"
         onClose={onClose}
@@ -80,7 +95,7 @@ export default function HeaderUI() {
             <S.AddBtn onClick={onClickAdd}>Sign up</S.AddBtn>
           </S.InnerWrapper>
         </S.SignupFormWrapper>
-      </Drawer>
+      </Drawer> */}
       <Modal
         title="Sign in"
         visible={isModalVisible}

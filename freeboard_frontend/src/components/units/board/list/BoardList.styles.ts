@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
 
 export const ListWrapper = styled.div`
   width: 1200px;
-  margin: 100px;
+  margin: 100px 100px 50px 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -101,11 +101,21 @@ export const SearchBtn = styled.button`
   border-radius: 10px;
 `;
 
+export const ColumnNumberHead = styled.div`
+  width: 100px;
+  text-align: center;
+  font-size: 18px;
+  color: #4f4f4f;
+`;
 export const ColumnNumber = styled.div`
   width: 100px;
   text-align: center;
   font-size: 18px;
   color: #4f4f4f;
+  :hover {
+    font-weight: bolder;
+    color: #ffd600;
+  }
 `;
 export const ColumnTitleHead = styled.div`
   text-align: center;
@@ -121,8 +131,8 @@ export const ColumnTitle = styled.div`
   font-size: 18px;
   color: #4f4f4f;
   :hover {
-    color: #ffd600;
     font-weight: bolder;
+    color: #ffd600;
   }
 `;
 
@@ -131,6 +141,10 @@ export const ColumnWriter = styled.div`
   width: 170px;
   font-size: 18px;
   color: #4f4f4f;
+  :hover {
+    font-weight: bolder;
+    color: #ffd600;
+  }
 `;
 
 export const ColumnDate = styled.div`
@@ -138,6 +152,10 @@ export const ColumnDate = styled.div`
   text-align: center;
   font-size: 18px;
   color: #4f4f4f;
+  :hover {
+    font-weight: bolder;
+    color: #ffd600;
+  }
 `;
 
 export const AddBtn = styled.button`

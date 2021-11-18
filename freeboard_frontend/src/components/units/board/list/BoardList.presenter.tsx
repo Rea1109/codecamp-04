@@ -2,10 +2,17 @@ import * as S from "./BoardList.styles";
 import { getDate, remakeTitle } from "../../../../commons/libraries/utils";
 import { IBoardListUIProps } from "./BoardList.types";
 import { DatePicker } from "antd";
+import Pagination from "@mui/material/Pagination";
 import moment from "moment";
+import styled from "@emotion/styled";
+
+const PageWrapper = styled(Pagination)`
+  margin-top: 30px;
+`;
 
 export default function BoardListUI(props: IBoardListUIProps) {
   const { RangePicker } = DatePicker;
+  console.log(props.lastPage);
   return (
     <S.Wrapper>
       <S.ListWrapper>
@@ -37,45 +44,50 @@ export default function BoardListUI(props: IBoardListUIProps) {
             ))}
           </S.Row>
         </S.Header>
-        <div>
-          <S.Row>
-            <S.SearchTitle
-              onChange={props.onChangeSearchInput}
-              type="text"
-              placeholder="제목 검색"
-            />
-            <RangePicker
-              ranges={{
-                Today: [moment(), moment()],
-                "This Month": [
-                  moment().startOf("month"),
-                  moment().endOf("month"),
-                ],
-              }}
-              onChange={props.onChangeDate}
-            />
-            <S.SearchBtn onClick={props.onClickSearch}>검색하기</S.SearchBtn>
-          </S.Row>
-          <S.BoardRowHead>
-            <S.ColumnNumber>번호</S.ColumnNumber>
-            <S.ColumnTitleHead>제목</S.ColumnTitleHead>
-            <S.ColumnWriter>작성자</S.ColumnWriter>
-            <S.ColumnDate>날짜</S.ColumnDate>
-          </S.BoardRowHead>
-          {props.boards?.fetchBoards.map((el: any, idx: number) => (
-            <S.BoardRow key={el._id}>
-              <S.ColumnNumber>{idx + 1}</S.ColumnNumber>
-              <S.ColumnTitle onClick={props.onClickGetBoard} id={el._id}>
-                {el.title}
-              </S.ColumnTitle>
-              <S.ColumnWriter>{el.writer}</S.ColumnWriter>
-              <S.ColumnDate>{getDate(el.createdAt)}</S.ColumnDate>
-            </S.BoardRow>
-          ))}
-          <S.Bottom>
-            <S.AddBtn onClick={props.onClickNew}>게시물 등록하기</S.AddBtn>
-          </S.Bottom>
-        </div>
+
+        <S.Row>
+          <S.SearchTitle
+            onChange={props.onChangeSearchInput}
+            type="text"
+            placeholder="제목 검색"
+          />
+          <RangePicker
+            ranges={{
+              Today: [moment(), moment()],
+              "This Month": [
+                moment().startOf("month"),
+                moment().endOf("month"),
+              ],
+            }}
+            onChange={props.onChangeDate}
+          />
+          <S.SearchBtn onClick={props.onClickSearch}>검색하기</S.SearchBtn>
+        </S.Row>
+        <S.BoardRowHead>
+          <S.ColumnNumberHead>번호</S.ColumnNumberHead>
+          <S.ColumnTitleHead>제목</S.ColumnTitleHead>
+          <S.ColumnWriter>작성자</S.ColumnWriter>
+          <S.ColumnDate>날짜</S.ColumnDate>
+        </S.BoardRowHead>
+        {props.boards?.fetchBoards.map((el: any, idx: number) => (
+          <S.BoardRow key={el._id} onClick={props.onClickGetBoard} id={el._id}>
+            <S.ColumnNumber>{idx + 1}</S.ColumnNumber>
+            <S.ColumnTitle>{remakeTitle(el.title)}</S.ColumnTitle>
+            <S.ColumnWriter>{remakeTitle(el.writer)}</S.ColumnWriter>
+            <S.ColumnDate>{getDate(el.createdAt)}</S.ColumnDate>
+          </S.BoardRow>
+        ))}
+
+        <PageWrapper
+          count={props.lastPage}
+          color="standard"
+          onChange={props.handleChange}
+          size="large"
+        />
+
+        <S.Bottom>
+          <S.AddBtn onClick={props.onClickNew}>게시물 등록하기</S.AddBtn>
+        </S.Bottom>
       </S.ListWrapper>
     </S.Wrapper>
   );

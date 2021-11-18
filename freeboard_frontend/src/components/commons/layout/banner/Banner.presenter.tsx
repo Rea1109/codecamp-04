@@ -24,6 +24,12 @@ export default function BannerUI() {
         <S.SliderDiv>
           <S.Image src="/images/board/bg-3.jpg" />
         </S.SliderDiv>
+        <S.SliderDiv>
+          <S.Image src="/images/board/bg-4.jpg" />
+        </S.SliderDiv>
+        <S.SliderDiv>
+          <S.Image src="/images/board/bg-5.jpg" />
+        </S.SliderDiv>
       </Slider>
     </S.Banner>
   );

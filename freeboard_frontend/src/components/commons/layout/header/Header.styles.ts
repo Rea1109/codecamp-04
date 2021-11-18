@@ -10,6 +10,11 @@ export const Header = styled.div`
 export const Label = styled.div`
   font-size: 40px;
   font-family: "mainFont";
+  display: flex;
+`;
+
+export const Logo = styled.div`
+  color: #ffd600; ;
 `;
 
 export const BtnWrapper = styled.div``;
