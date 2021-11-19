@@ -5,7 +5,7 @@ interface IUserWirteUIProps {
   isHidden: boolean;
 }
 
-const test = "";
+const test;
 
 export default function UserWriteUI(props: IUserWirteUIProps) {
   return (
