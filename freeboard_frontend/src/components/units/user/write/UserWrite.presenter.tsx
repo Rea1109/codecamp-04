@@ -5,6 +5,8 @@ interface IUserWirteUIProps {
   isHidden: boolean;
 }
 
+const test = "";
+
 export default function UserWriteUI(props: IUserWirteUIProps) {
   return (
     <S.Wrapper>
