@@ -50,7 +50,11 @@
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
-      "npx eslint **/*.{ts,tsx}"
+      [
+        "tslint",
+        "prettier --write",
+        "git add"
+      ]
     ]
   }
 }
