@@ -1,4 +1,4 @@
-import * as S from "./UserWirte.styles";
+import * as S from "./UserWrite.styles";
 import Radio from "@mui/material/Radio";
 
 interface IUserWirteUIProps {
@@ -11,7 +11,7 @@ export default function UserWriteUI(props: IUserWirteUIProps) {
       <S.FromWrapper>
         <S.Title>
           <S.Logo> &#91; &#93;</S.Logo>
-          <S.Title>FreeBoard</S.Title>
+          <S.Title>devNote.rea</S.Title>
         </S.Title>
         <S.InnerWrapper>
           <S.InputBox type="text" placeholder="email를 입력해 주세요" />

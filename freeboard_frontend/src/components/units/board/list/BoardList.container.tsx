@@ -63,7 +63,7 @@ export default function BoardList() {
     console.log(`시작 날짜 ${startDate} 끝 날짜 ${endDate} `);
   };
 
-  const handleChange = (event: any, value: number) => {
+  const handleChange = (event: ChangeEvent, value: number) => {
     setPage(Number(value));
     refetch({ page: page });
   };

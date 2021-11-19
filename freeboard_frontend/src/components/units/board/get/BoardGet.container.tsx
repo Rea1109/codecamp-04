@@ -50,8 +50,8 @@ export default function BoardGet() {
           },
         ],
       });
-    } catch (error: any) {
-      console.log(error.message);
+    } catch (error) {
+      error instanceof Error && console.log(error.message);
     }
   };
 
@@ -66,8 +66,8 @@ export default function BoardGet() {
           },
         ],
       });
-    } catch (error: any) {
-      console.log(error.message);
+    } catch (error) {
+      error instanceof Error && console.log(error.message);
     }
   };
 
@@ -78,8 +78,8 @@ export default function BoardGet() {
       });
       Modal.success({ title: "게시물이 삭제되었습니다." });
       router.push(`/boards`);
-    } catch (error: any) {
-      console.log(error.message);
+    } catch (error) {
+      error instanceof Error && console.log(error.message);
     }
   };
 

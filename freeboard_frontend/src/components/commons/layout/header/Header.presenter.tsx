@@ -40,7 +40,7 @@ export default function HeaderUI() {
         <S.Logo style={{ color: "gold", marginRight: "10px" }}>
           &#91; &#93;
         </S.Logo>{" "}
-        FreeBoard
+        devNote.rea
       </S.Label>
       <S.BtnWrapper>
         <S.SigninBtn onClick={showModal}>Sign in</S.SigninBtn>
