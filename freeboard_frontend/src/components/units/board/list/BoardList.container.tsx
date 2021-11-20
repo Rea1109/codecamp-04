@@ -6,12 +6,13 @@ import {
   IQueryFetchBoardsArgs,
   IQueryFetchBoardsCountArgs,
 } from "../../../../commons/types/generated/types";
-import BoardListUI from "./BoardList.presenter";
+// import BoardListUI from "./BoardList.presenter";
 import {
   FETCH_BOARDS,
   FETCH_BOARDS_BEST,
   FETCH_BOARDS_COUNT,
 } from "./BoardList.queries";
+import BoardTestUI from "./BoardTestUI";
 
 export default function BoardList() {
   const router = useRouter();
@@ -22,12 +23,16 @@ export default function BoardList() {
   const [endDate, setEndDate] = useState();
   const [page, setPage] = useState(1);
 
-  const { data: boards, refetch } = useQuery<
-    Pick<IQuery, "fetchBoards">,
-    IQueryFetchBoardsArgs
-  >(FETCH_BOARDS, {
-    variables: { search: searchKeyword, page },
-  });
+  const {
+    data: boards,
+    refetch,
+    fetchMore,
+  } = useQuery<Pick<IQuery, "fetchBoards">, IQueryFetchBoardsArgs>(
+    FETCH_BOARDS,
+    {
+      variables: { search: searchKeyword, page },
+    }
+  );
 
   const { data: best } =
     useQuery<Pick<IQuery, "fetchBoardsOfTheBest">>(FETCH_BOARDS_BEST);
@@ -68,8 +73,35 @@ export default function BoardList() {
     refetch({ page: page });
   };
 
+  const onLoadMore = () => {
+    if (!boards) return;
+
+    fetchMore({
+      variables: { page: Math.ceil(boards.fetchBoards.length / 10) + 1 },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult?.fetchBoards)
+          return { fetchBoards: [...prev.fetchBoards] };
+
+        return {
+          fetchBoards: [...prev.fetchBoards, ...fetchMoreResult?.fetchBoards],
+        };
+      },
+    });
+  };
+
   return (
-    <BoardListUI
+    // <BoardListUI
+    //   boards={boards}
+    //   best={best}
+    //   lastPage={lastPage}
+    //   onClickGetBoard={onClickGetBoard}
+    //   onClickNew={onClickNew}
+    //   onChangeSearchInput={onChangeSearchInput}
+    //   onClickSearch={onClickSearch}
+    //   onChangeDate={onChangeDate}
+    //   handleChange={handleChange}
+    // />
+    <BoardTestUI
       boards={boards}
       best={best}
       lastPage={lastPage}
@@ -79,6 +111,7 @@ export default function BoardList() {
       onClickSearch={onClickSearch}
       onChangeDate={onChangeDate}
       handleChange={handleChange}
+      onLoadMore={onLoadMore}
     />
   );
 }

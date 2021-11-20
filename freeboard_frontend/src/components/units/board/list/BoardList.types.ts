@@ -11,4 +11,5 @@ export interface IBoardListUIProps {
   onClickSearch: () => void;
   onChangeDate: (dates: any, dateStrings: any) => void;
   handleChange: (event: any, value: number) => void;
+  onLoadMore: () => void;
 }

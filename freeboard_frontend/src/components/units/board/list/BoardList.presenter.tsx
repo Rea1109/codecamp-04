@@ -69,11 +69,11 @@ export default function BoardListUI(props: IBoardListUIProps) {
           <S.ColumnWriter>작성자</S.ColumnWriter>
           <S.ColumnDate>날짜</S.ColumnDate>
         </S.BoardRowHead>
-        {props.boards?.fetchBoards.map((el: any, idx: number) => (
+        {props.boards?.fetchBoards.map((el, idx: number) => (
           <S.BoardRow key={el._id} onClick={props.onClickGetBoard} id={el._id}>
             <S.ColumnNumber>{idx + 1}</S.ColumnNumber>
             <S.ColumnTitle>{remakeTitle(el.title)}</S.ColumnTitle>
-            <S.ColumnWriter>{remakeTitle(el.writer)}</S.ColumnWriter>
+            <S.ColumnWriter>{remakeTitle(el.writer || "")}</S.ColumnWriter>
             <S.ColumnDate>{getDate(el.createdAt)}</S.ColumnDate>
           </S.BoardRow>
         ))}

@@ -14,3 +14,11 @@ export function remakeTitle(title: string) {
     return title;
   }
 }
+
+export function remakeContents(contents: string) {
+  if (contents.length > 25) {
+    return `${contents.slice(0, 25)}....`;
+  } else {
+    return contents;
+  }
+}
