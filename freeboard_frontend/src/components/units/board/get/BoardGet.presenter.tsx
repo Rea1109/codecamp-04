@@ -30,12 +30,12 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
               </Tooltip>
             )}
 
-            {props.data?.fetchBoard.boardAddress && (
+            {props.data?.fetchBoard.boardAddress?.address && (
               <Tooltip title={props.data?.fetchBoard.boardAddress?.address}>
                 <S.AddrIcon src="/images/board/location.png" />
               </Tooltip>
             )}
-            {!props.data?.fetchBoard.boardAddress && (
+            {!props.data?.fetchBoard.boardAddress?.address && (
               <Tooltip title="등록된 주소가 없습니다.">
                 <S.AddrIcon src="/images/board/location.png" />
               </Tooltip>
@@ -88,7 +88,6 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
         </S.LikeWrapper>
       </S.BoardWrapper>
       <S.MenuWrapper>
-        {/* <S.Menu type="button" value="목록으로" onClick={props.onClickList} /> */}
         <S.Menu type="button" value="수정하기" onClick={props.onClickUpdate} />
         <S.Menu type="button" value="삭제하기" onClick={props.onClickDelete} />
       </S.MenuWrapper>

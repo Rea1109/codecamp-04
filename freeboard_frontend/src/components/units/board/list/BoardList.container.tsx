@@ -4,15 +4,10 @@ import { ChangeEvent, MouseEvent, useState } from "react";
 import {
   IQuery,
   IQueryFetchBoardsArgs,
-  IQueryFetchBoardsCountArgs,
 } from "../../../../commons/types/generated/types";
 // import BoardListUI from "./BoardList.presenter";
-import {
-  FETCH_BOARDS,
-  FETCH_BOARDS_BEST,
-  FETCH_BOARDS_COUNT,
-} from "./BoardList.queries";
-import BoardTestUI from "./BoardTestUI";
+import { FETCH_BOARDS, FETCH_BOARDS_BEST } from "./BoardList.queries";
+import BoardListUI from "./BoardList.presenter";
 
 export default function BoardList() {
   const router = useRouter();
@@ -21,7 +16,6 @@ export default function BoardList() {
   const [inputKeyword, setInputKeyword] = useState("");
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-  const [page, setPage] = useState(1);
 
   const {
     data: boards,
@@ -30,24 +24,12 @@ export default function BoardList() {
   } = useQuery<Pick<IQuery, "fetchBoards">, IQueryFetchBoardsArgs>(
     FETCH_BOARDS,
     {
-      variables: { search: searchKeyword, page },
+      variables: { search: searchKeyword },
     }
   );
 
   const { data: best } =
     useQuery<Pick<IQuery, "fetchBoardsOfTheBest">>(FETCH_BOARDS_BEST);
-
-  const { data: dataBoardCount } = useQuery<
-    Pick<IQuery, "fetchBoardsCount">,
-    IQueryFetchBoardsCountArgs
-  >(FETCH_BOARDS_COUNT, {
-    variables: {
-      search: searchKeyword,
-    },
-  });
-  const lastPage = dataBoardCount
-    ? Math.ceil(dataBoardCount.fetchBoardsCount / 10)
-    : 1;
 
   const onClickGetBoard = (e: MouseEvent<HTMLDivElement>) =>
     e.currentTarget instanceof Element &&
@@ -68,11 +50,6 @@ export default function BoardList() {
     console.log(`시작 날짜 ${startDate} 끝 날짜 ${endDate} `);
   };
 
-  const handleChange = (event: ChangeEvent, value: number) => {
-    setPage(Number(value));
-    refetch({ page: page });
-  };
-
   const onLoadMore = () => {
     if (!boards) return;
 
@@ -90,27 +67,14 @@ export default function BoardList() {
   };
 
   return (
-    // <BoardListUI
-    //   boards={boards}
-    //   best={best}
-    //   lastPage={lastPage}
-    //   onClickGetBoard={onClickGetBoard}
-    //   onClickNew={onClickNew}
-    //   onChangeSearchInput={onChangeSearchInput}
-    //   onClickSearch={onClickSearch}
-    //   onChangeDate={onChangeDate}
-    //   handleChange={handleChange}
-    // />
-    <BoardTestUI
+    <BoardListUI
       boards={boards}
       best={best}
-      lastPage={lastPage}
       onClickGetBoard={onClickGetBoard}
       onClickNew={onClickNew}
       onChangeSearchInput={onChangeSearchInput}
       onClickSearch={onClickSearch}
       onChangeDate={onChangeDate}
-      handleChange={handleChange}
       onLoadMore={onLoadMore}
     />
   );

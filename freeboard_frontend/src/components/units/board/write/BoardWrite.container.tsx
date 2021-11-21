@@ -33,14 +33,14 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [youtubeUrl, setYoutubeUrl] = useState("");
+  const [address, setAddress] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
 
   const [errorWriter, setErrorWriter] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
   const [errorTitle, setErrorTitle] = useState("");
   const [errorContent, setErrorContent] = useState("");
-  const [address, setAddress] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [addressDetail, setAddressDetail] = useState("");
 
   const onChangeWriter = (e: ChangeEvent<HTMLInputElement>) => {
     setWriter(e.target.value);
