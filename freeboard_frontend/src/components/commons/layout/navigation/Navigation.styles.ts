@@ -20,3 +20,36 @@ export const Menu = styled.div`
     cursor: default;
   }
 `;
+
+export const Img = styled.img`
+  width: 40px;
+  height: 40px;
+`;
+
+export const Icon = styled.img`
+  width: 20px;
+  height: 20px;
+  margin-right: 32px;
+`;
+
+export const WeatherWraaper = styled.div`
+  display: flex;
+  margin: 20px;
+`;
+
+export const WeatherWraaperHead = styled.div`
+  display: flex;
+  margin-top: 30px;
+  margin-left: 11px;
+`;
+
+export const WeatherLabel = styled.div`
+  vertical-align: middle;
+  font-weight: bolder;
+  line-height: 35px;
+  margin-left: 20px;
+`;
+
+export const SubLabel = styled.div`
+  font-weight: bolder;
+`;

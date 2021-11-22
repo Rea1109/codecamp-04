@@ -22,3 +22,7 @@ export function remakeContents(contents: string) {
     return contents;
   }
 }
+
+export function getTemp(temp: number) {
+  return (temp - 273.15).toFixed(1);
+}

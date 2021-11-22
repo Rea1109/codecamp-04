@@ -8,5 +8,14 @@ function solution(x) {
       sum += Number(cha);
     });
 
-  return x % sum === 0 ? true : false;
+  return x % sum === 0;
+}
+
+function mento(x) {
+  const sum = x
+    .toString()
+    .split("")
+    .reduce((a, b) => {
+      return Number(a) + Number(b);
+    }, 0);
 }
