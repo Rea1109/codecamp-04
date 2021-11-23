@@ -5,9 +5,15 @@ const UseEffectDependencyArrayPage = () => {
 
   const [count, setCount] = useState(0);
 
+  // useEffect(() => {
+  //   console.log("최초 한번 실행됨 왜? 의존성 배열이 비어있으니깐");
+  // }, []);
+
   useEffect(() => {
-    console.log("최초 한번 실행됨 왜? 의존성 배열이 비어있으니깐");
-  }, []);
+    console.log(
+      "최초 한번 실행되고 , 무언가 변경될때마다 실행됨 왜? 의존성 배열 자체를 인자로 안넣어줬으니깐"
+    );
+  });
 
   // useEffect(() => {
   //   console.log(

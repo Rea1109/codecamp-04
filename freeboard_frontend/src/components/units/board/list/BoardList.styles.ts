@@ -35,6 +35,15 @@ export const Row = styled.div`
   justify-content: space-between;
 `;
 
+export const BoardRow = styled.div`
+  width: 1200px;
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding-left: 40px;
+`;
+
 export const BoardRowHead = styled.div`
   width: 1200px;
   padding: 20px;
@@ -44,17 +53,6 @@ export const BoardRowHead = styled.div`
   border-bottom: 1px solid #bdbdbd;
 `;
 
-export const BoardRow = styled.div`
-  width: 1200px;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  font-size: 18px;
-  border-bottom: 1px solid #bdbdbd;
-
-  cursor: default;
-`;
-
 export const Bottom = styled.div`
   width: 100%;
   margin-top: 50px;
@@ -62,8 +60,19 @@ export const Bottom = styled.div`
   justify-content: flex-end;
 `;
 
-export const BoardCard = styled.div`
+export const BestBoardCard = styled.div`
   width: 282px;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0px 0px 5px gray;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const BoardCard = styled.div`
+  width: 266px;
+  height: 300px;
+  margin: 10px 20px 55px 0px;
   border: none;
   border-radius: 15px;
   box-shadow: 0px 0px 5px gray;
@@ -181,6 +190,25 @@ export const BestTitle = styled.div`
   margin-top: 20px;
   margin-bottom: 30px;
 `;
+
+export const BoardTitle = styled.div`
+  cursor: default;
+  :hover {
+    color: #ffd600;
+    font-weight: bolder;
+  }
+  font-size: 23px;
+  margin-top: 20px;
+  margin-bottom: 50px;
+`;
+
+export const BoardContents = styled.div`
+  text-align: left;
+  margin-bottom: 60px;
+  font-size: 18px;
+  color: #828282;
+`;
+
 export const BestWriter = styled.div`
   display: flex;
   margin-bottom: 8px;
@@ -220,4 +248,9 @@ export const LikeCount = styled.div`
   font-size: 16px;
   margin-top: 10px;
   text-align: center;
+`;
+
+export const BoardBodyWrapper = styled.div`
+  height: 800px;
+  overflow: auto;
 `;

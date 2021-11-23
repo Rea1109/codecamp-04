@@ -17,11 +17,13 @@ export default function NavigationUI() {
   const router = useRouter();
   const [weatherInfo, setWeatherInfo] = useState<IWeatherInfo>({});
 
+  console.log(process.env.NEXT_PUBLIC_APP_KEY);
+
   const fetchWeather = async () => {
     const result = await axios.get(
-      "https://api.openweathermap.org/data/2.5/weather?q=Seoul,kr&appid=de43835420dc373a9c635d81f90469e3"
+      `https://api.openweathermap.org/data/2.5/weather?q=Seoul,kr&appid=${process.env.NEXT_PUBLIC_APP_KEY}`
     );
-    console.log(result);
+    console.log(result.data);
 
     setWeatherInfo({
       cityName: result.data.name,

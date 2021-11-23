@@ -19,7 +19,6 @@ export default class MyLifecycleRefPage extends Component {
 
   componentDidUpdate() {
     console.log("수정됨");
-    // console.log(this);
   }
 
   componentWillUnmount() {
@@ -31,7 +30,6 @@ export default class MyLifecycleRefPage extends Component {
     this.setState((prev: IState) => ({
       count: prev.count + 1,
     }));
-    // this.inputRef.current?.focus();
   };
 
   onClickMove = () => {

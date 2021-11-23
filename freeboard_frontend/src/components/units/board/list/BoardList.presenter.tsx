@@ -18,7 +18,7 @@ export default function BoardListUI(props: IBoardListUIProps) {
         <S.Header>
           <S.Row>
             {props.best?.fetchBoardsOfTheBest.map((el: any) => (
-              <S.BoardCard key={el._id}>
+              <S.BestBoardCard key={el._id}>
                 <S.BoardImg src="/images/board/bg-3.jpg" />
                 <S.BoardBody>
                   <S.BestTitle onClick={props.onClickGetBoard} id={el._id}>
@@ -38,7 +38,7 @@ export default function BoardListUI(props: IBoardListUIProps) {
                     </S.Like>
                   </S.BestInfo>
                 </S.BoardBody>
-              </S.BoardCard>
+              </S.BestBoardCard>
             ))}
           </S.Row>
         </S.Header>
@@ -60,49 +60,23 @@ export default function BoardListUI(props: IBoardListUIProps) {
           />
           <S.SearchBtn onClick={props.onClickSearch}>검색하기</S.SearchBtn>
         </S.Row>
-        <div style={{ height: "800px", overflow: "auto" }}>
+        <S.BoardBodyWrapper>
           <InfiniteScroll
             pageStart={0}
             loadMore={props.onLoadMore}
             hasMore={true}
             useWindow={false}
           >
-            <S.Row
-              style={{
-                justifyContent: "flex-start",
-                flexWrap: "wrap",
-                paddingLeft: "40px",
-              }}
-            >
+            <S.BoardRow>
               {props.boards?.fetchBoards.map((el) => (
-                <S.BoardCard
-                  key={el._id}
-                  style={{
-                    width: "266px",
-                    height: "300px",
-                    marginTop: "10px",
-                    marginBottom: "55px",
-                    marginRight: "20px",
-                  }}
-                >
+                <S.BoardCard key={el._id}>
                   <S.BoardBody>
-                    <S.BestTitle
-                      onClick={props.onClickGetBoard}
-                      id={el._id}
-                      style={{ marginBottom: "50px", fontSize: "23px" }}
-                    >
+                    <S.BoardTitle onClick={props.onClickGetBoard} id={el._id}>
                       {remakeTitle(el.title)}
-                    </S.BestTitle>
-                    <div
-                      style={{
-                        textAlign: "left",
-                        marginBottom: "60px",
-                        fontSize: "18px",
-                        color: "#828282",
-                      }}
-                    >
+                    </S.BoardTitle>
+                    <S.BoardContents>
                       {remakeContents(el.contents)}
-                    </div>
+                    </S.BoardContents>
                     <S.BestInfo>
                       <S.Profile>
                         <S.BestWriter>
@@ -119,9 +93,9 @@ export default function BoardListUI(props: IBoardListUIProps) {
                   </S.BoardBody>
                 </S.BoardCard>
               ))}
-            </S.Row>
+            </S.BoardRow>
           </InfiniteScroll>
-        </div>
+        </S.BoardBodyWrapper>
         <S.Bottom>
           <S.AddBtn onClick={props.onClickNew}>게시물 등록하기</S.AddBtn>
         </S.Bottom>
