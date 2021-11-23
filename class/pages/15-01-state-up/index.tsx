@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Child1 from "../../src/components/units/stateup/child1";
-import Child2 from "../../src/components/units/stateup/child2";
+import Child1 from "../../src/components/units/stateup/Child1";
+import Child2 from "../../src/components/units/stateup/Child2";
 
 export default function StateUpPage() {
   const [count, setCount] = useState(0);

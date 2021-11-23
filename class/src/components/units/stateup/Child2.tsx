@@ -1,5 +1,6 @@
 interface IChild2 {
   count: number;
+  onClickCounter: () => void;
 }
 
 export default function Child2(props: IChild2) {
