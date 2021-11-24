@@ -5,8 +5,6 @@ import { useRouter } from "next/router";
 
 export default function HeaderUI() {
   const router = useRouter();
-
-  // const [visible, setVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
@@ -22,16 +20,7 @@ export default function HeaderUI() {
     setIsModalVisible(false);
   };
 
-  // const showDrawer = () => {
-  //   setVisible(true);
-  // };
-  // const onClose = () => {
-  //   setVisible(false);
-  // };
-
-  // const onClickAdd = () => {
-  //   Modal.success({ title: "Welcome" });
-  // };
+  const onChangeInput = () => {};
 
   return (
     <S.Header>
@@ -46,56 +35,12 @@ export default function HeaderUI() {
         <S.SigninBtn onClick={showModal}>Sign in</S.SigninBtn>
         <S.SignupBtn
           onClick={() => {
-            router.push("/signup");
+            router.push("/user/signup");
           }}
         >
           Sign up
         </S.SignupBtn>
       </S.BtnWrapper>
-      {/* <Drawer
-        title="Welcome FreeBoard !"
-        placement="right"
-        onClose={onClose}
-        visible={visible}
-        style={{ fontFamily: "mainFont" }}
-      >
-        <S.SignupFormWrapper>
-          <S.InnerWrapper>
-            <S.InputBox type="text" placeholder="E-mail" />
-          </S.InnerWrapper>
-          <S.InnerWrapper>
-            <S.InputBox type="text" placeholder="Name" />
-          </S.InnerWrapper>
-          <S.InnerWrapper>
-            <S.InputBox type="password" placeholder="Password" />
-          </S.InnerWrapper>
-          <S.InnerWrapper>
-            <S.InputBox type="password" placeholder="Password Again" />
-          </S.InnerWrapper>
-          <S.InnerWrapper>
-            <S.SelectBox>
-              <option selected disabled>
-                LOCATION
-              </option>
-              <option>SEOUL</option>
-              <option>Gyeonggi-do</option>
-              <option>Incheon</option>
-            </S.SelectBox>
-          </S.InnerWrapper>
-          <S.InnerWrapper>
-            <S.SelectBox>
-              <option selected disabled>
-                GENDER
-              </option>
-              <option>WOMEN</option>
-              <option>MEN</option>
-            </S.SelectBox>
-          </S.InnerWrapper>
-          <S.InnerWrapper>
-            <S.AddBtn onClick={onClickAdd}>Sign up</S.AddBtn>
-          </S.InnerWrapper>
-        </S.SignupFormWrapper>
-      </Drawer> */}
       <Modal
         title="Sign in"
         visible={isModalVisible}
@@ -103,8 +48,18 @@ export default function HeaderUI() {
         onCancel={handleCancel}
       >
         <S.SignupFormWrapper>
-          <S.SignInInput type="text" placeholder="E-mail" />
-          <S.SignInInput type="password" placeholder="Password" />
+          <S.SignInInput
+            type="text"
+            placeholder="E-mail"
+            name="email"
+            onChange={onChangeInput}
+          />
+          <S.SignInInput
+            type="password"
+            placeholder="Password"
+            name="password"
+            onChange={onChangeInput}
+          />
         </S.SignupFormWrapper>
       </Modal>
     </S.Header>

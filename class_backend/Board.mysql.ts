@@ -16,4 +16,7 @@ export default class Board extends BaseEntity {
 
   @Column({ type: "integer" })
   age!: number;
+
+  @Column({ type: "timestamp", nullable: true, default: null })
+  deletdeAt?: Date;
 }

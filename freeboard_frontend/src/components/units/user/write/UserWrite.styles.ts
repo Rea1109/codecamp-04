@@ -128,3 +128,17 @@ export const Error = styled.div`
   visibility: ${(props: IUserWriteStylesProps) =>
     props.isHidden ? "hidden" : "visible"};
 `;
+
+export const BtnWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const CheckBtn = styled.button`
+  margin-top: 10px;
+  height: 40px;
+  background-color: #c7bba9;
+  border: 2px solid #c7bba9;
+  border-radius: 5px;
+  color: white;
+`;
