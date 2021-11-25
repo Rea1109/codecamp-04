@@ -31,6 +31,13 @@ export const InnerWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
+export const BtnWrapper = styled.div`
+  width: 100%;
+  margin: 30px 0px 30px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const ProfileImg = styled.img`
   width: 100px;
@@ -52,4 +59,16 @@ export const ProfileName = styled.div`
 
 export const ProfileEmail = styled.div`
   font-size: 30px;
+`;
+
+export const FunctionBtn = styled.button`
+  font-size: 18px;
+  margin-right: 30px;
+  margin-left: 30px;
+  border: none;
+  border-radius: 10px;
+  background-color: #c7bba9;
+  color: white;
+  width: 150px;
+  height: 35px;
 `;

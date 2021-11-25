@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { useMutation } from "@apollo/client";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useRef } from "react";
 import BoardWriteUI from "./BoardWrite.presenter";
-import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
+import { CREATE_BOARD, UPDATE_BOARD, UPLOAD_FILE } from "./BoardWrite.queries";
 import { IBoardWriteProps, IUpdateBoardInput } from "./BoardWrite.types";
 import {
   IMutation,
@@ -18,6 +18,26 @@ declare const window: Window &
 
 export default function BoardWrite(props: IBoardWriteProps) {
   const router = useRouter();
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [myImages, setMyImages] = useState<string[]>([]);
+  const [uploadFile] = useMutation(UPLOAD_FILE);
+
+  const onChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
+    const myFile = event.target.files?.[0];
+    console.log(myFile);
+
+    const result = await uploadFile({
+      variables: {
+        file: myFile,
+      },
+    });
+
+    console.log(result.data.uploadFile.url);
+    setMyImages((prev) => [...prev, result.data.uploadFile.url]);
+  };
+  const onClickMyImage = () => {
+    fileRef.current?.click();
+  };
 
   const [createBoard] = useMutation<
     Pick<IMutation, "createBoard">,
@@ -27,143 +47,90 @@ export default function BoardWrite(props: IBoardWriteProps) {
     Pick<IMutation, "updateBoard">,
     IMutationUpdateBoardArgs
   >(UPDATE_BOARD);
-
-  const [writer, setWriter] = useState("");
-  const [password, setPassword] = useState("");
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [youtubeUrl, setYoutubeUrl] = useState("");
-  const [address, setAddress] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [addressDetail, setAddressDetail] = useState("");
+  const [boardInput, setBoardInput] = useState({
+    writer: "",
+    password: "",
+    title: "",
+    contents: "",
+    youtubeUrl: "",
+  });
+  const [boardAddress, setBoardAddress] = useState({
+    address: "",
+    zipcode: "",
+    addressDetail: "",
+  });
 
   const [errorWriter, setErrorWriter] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
   const [errorTitle, setErrorTitle] = useState("");
   const [errorContent, setErrorContent] = useState("");
 
-  const onChangeWriter = (e: ChangeEvent<HTMLInputElement>) => {
-    setWriter(e.target.value);
-    if (e.target.value !== "") {
-      setErrorWriter("");
-    } else {
-      setErrorWriter("작성자를 입력해주세요");
-    }
+  const onChangeBoardInput = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setBoardInput({
+      ...boardInput,
+      [event.target.name]: event.target.value,
+    });
+    if (event.target.name === "writer") setErrorWriter("");
+    if (event.target.name === "password") setErrorPassword("");
+    if (event.target.name === "title") setErrorTitle("");
+    if (event.target.name === "contents") setErrorContent("");
   };
-
-  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-    if (e.target.value !== "") {
-      setErrorPassword("");
-    } else {
-      setErrorPassword("비밀번호를 입력해주세요");
-    }
-  };
-
-  const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-    if (e.target.value !== "") {
-      setErrorTitle("");
-    } else {
-      setErrorTitle("제목을 입력해주세요");
-    }
-  };
-
-  const onChangeContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
-    if (e.target.value !== "") {
-      setErrorContent("");
-    } else {
-      setErrorContent("내용을 입력해주세요");
-    }
-  };
-
-  const onChangeAddr = (e: ChangeEvent<HTMLInputElement>) =>
-    setAddressDetail(e.target.value);
-
-  const onChangeYoutube = (e: ChangeEvent<HTMLInputElement>) =>
-    setYoutubeUrl(e.target.value);
-
-  const check = () => {
-    let isCheck = true;
-
-    if (writer === "") {
-      setErrorWriter("작성자를 입력해주세요");
-      isCheck = false;
-    }
-
-    if (password === "") {
-      setErrorPassword("비밀번호를 입력해주세요");
-      isCheck = false;
-    }
-
-    if (title === "") {
-      setErrorTitle("제목을 입력해주세요");
-      isCheck = false;
-    }
-
-    if (content === "") {
-      setErrorContent("내용을 입력해주세요");
-      isCheck = false;
-    }
-
-    return isCheck;
-  };
-
+  const onChangeBoardAddress = (event: ChangeEvent<HTMLInputElement>) =>
+    setBoardAddress({
+      ...boardAddress,
+      [event.target.name]: event.target.value,
+    });
   const addBoard = async () => {
-    if (check()) {
+    if (isCheck()) {
       try {
         const result = await createBoard({
           variables: {
             createBoardInput: {
-              writer,
-              password,
-              title,
-              contents: content,
-              youtubeUrl,
+              ...boardInput,
               boardAddress: {
-                zipcode,
-                address,
-                addressDetail,
+                ...boardAddress,
               },
+              images: myImages,
             },
           },
         });
         Modal.success({ title: "게시물 등록이 완료 되었습니다." });
         router.push(`/boards/${result.data?.createBoard._id}`);
-      } catch (error: any) {
-        console.log(error.message);
+      } catch (error) {
+        error instanceof Error && console.log(error.message);
         Modal.error({ title: "error.message" });
       }
     }
   };
-
   const editBoard = async () => {
-    const boardAddress = {};
     const updateBoardInput: IUpdateBoardInput = {};
-    if (!title && !content && !youtubeUrl && !zipcode) {
-      Modal.warning({ title: "수정 내용이 없습니다." });
-      return;
-    }
 
-    if (title) updateBoardInput.title = title;
-    if (content) updateBoardInput.contents = content;
-    if (youtubeUrl) updateBoardInput.youtubeUrl = youtubeUrl;
-
-    if (zipcode) {
-      updateBoardInput.boardAddress = boardAddress;
-
-      if (zipcode) updateBoardInput.boardAddress.zipcode = zipcode;
-      if (address) updateBoardInput.boardAddress.address = address;
-      if (addressDetail)
-        updateBoardInput.boardAddress.addressDetail = addressDetail;
+    console.log(boardInput);
+    console.log(boardAddress);
+    if (boardInput.writer !== "") updateBoardInput.writer = boardInput.writer;
+    if (boardInput.title !== "") updateBoardInput.title = boardInput.title;
+    if (boardInput.contents !== "")
+      updateBoardInput.contents = boardInput.contents;
+    if (boardInput.youtubeUrl !== "")
+      updateBoardInput.youtubeUrl = boardInput.youtubeUrl;
+    if (boardAddress.zipcode !== "" || boardAddress.addressDetail !== "") {
+      updateBoardInput.boardAddress = {};
+      if (boardAddress.zipcode === "" && boardAddress.addressDetail !== "") {
+        updateBoardInput.boardAddress.addressDetail =
+          boardAddress.addressDetail;
+      } else {
+        updateBoardInput.boardAddress.zipcode = boardAddress.zipcode;
+        updateBoardInput.boardAddress.address = boardAddress.address;
+      }
     }
 
     try {
       const result = await updateBoard({
         variables: {
           boardId: String(router.query.boardId),
-          password: password,
+          password: boardInput.password,
           updateBoardInput: updateBoardInput,
         },
       });
@@ -176,8 +143,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
       Modal.error({ title: error.message });
     }
   };
-
-  // 다음 우편 API
   const getAddr = () => {
     new window.daum.Postcode({
       oncomplete: function (data: any) {
@@ -202,20 +167,40 @@ export default function BoardWrite(props: IBoardWriteProps) {
             extraAddr = " (" + extraAddr + ")";
           }
         }
-        setZipcode(data.zonecode);
-        setAddress(addr);
+        setBoardAddress({
+          ...boardAddress,
+          zipcode: data.zonecode,
+          address: addr,
+        });
         document.getElementById("extraAddr")?.focus();
       },
     }).open();
   };
 
+  const isCheck = () => {
+    let check = true;
+    if (!boardInput.writer) {
+      setErrorWriter("작성자를 입력해주세요");
+      check = false;
+    }
+    if (!boardInput.password) {
+      setErrorPassword("비밀번호를 입력해주세요");
+      check = false;
+    }
+    if (!boardInput.title) {
+      setErrorTitle("제목을 입력해주세요");
+      check = false;
+    }
+    if (!boardInput.contents) {
+      setErrorContent("내용을 입력해주세요");
+      check = false;
+    }
+    return check;
+  };
+
   return (
     <BoardWriteUI
-      onChangeWriter={onChangeWriter}
-      onChangePassword={onChangePassword}
-      onChangeTitle={onChangeTitle}
-      onChangeContent={onChangeContent}
-      onChangeYoutube={onChangeYoutube}
+      onChangeBoardInput={onChangeBoardInput}
       addBoard={addBoard}
       editBoard={editBoard}
       getBoard={() => router.push(`/boards/${router.query.boardId}`)}
@@ -225,10 +210,13 @@ export default function BoardWrite(props: IBoardWriteProps) {
       errorContent={errorContent}
       isEdit={props.isEdit}
       getAddr={getAddr}
-      onChangeAddr={onChangeAddr}
-      address={address}
-      zipcode={zipcode}
+      onChangeBoardAddress={onChangeBoardAddress}
+      boardAddress={boardAddress}
       data={props.data}
+      onChangeFile={onChangeFile}
+      onClickMyImage={onClickMyImage}
+      fileRef={fileRef}
+      myImages={myImages}
     />
   );
 }

@@ -12,15 +12,17 @@ export default function CommentListUI(props: ICommentListUI) {
   return (
     <S.Wrapper>
       <S.CommentWrapper>
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={props.onLoadMore}
-          hasMore={true}
-        >
-          {props.data?.fetchBoardComments.map((el: any) => (
-            <CommentListUIItem key={el._id} el={el} />
-          ))}
-        </InfiniteScroll>
+        {props.data?.fetchBoardComments && (
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={props.onLoadMore}
+            hasMore={true}
+          >
+            {props.data?.fetchBoardComments.map((el: any) => (
+              <CommentListUIItem key={el._id} el={el} />
+            ))}
+          </InfiniteScroll>
+        )}
       </S.CommentWrapper>
     </S.Wrapper>
   );

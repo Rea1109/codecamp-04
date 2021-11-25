@@ -108,11 +108,20 @@ export const ImgWrapper = styled.div`
   margin-bottom: 10px;
 `;
 
-export const ImgBox = styled.div`
+export const AddImgBox = styled.img`
   width: 78px;
   height: 78px;
-  background-color: #bdbdbd;
-  border: none;
+  background-color: white;
+  border: 1px solid white;
+  margin-right: 20px;
+  text-align: center;
+  line-height: 78px;
+  padding: 20px;
+`;
+export const ImgBox = styled.img`
+  width: 78px;
+  height: 78px;
+  border: 2px solid #c6bba8;
   margin-right: 20px;
   text-align: center;
   line-height: 78px;

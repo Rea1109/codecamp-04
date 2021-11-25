@@ -1,9 +1,11 @@
 import * as S from "./BoardGet.styles";
 import { getDate } from "../../../../commons/libraries/utils";
 import { IBoardGetUIProps } from "./BoardGet.types";
-import { Tooltip } from "antd";
+import { Tooltip, Image } from "antd";
+import { useState } from "react";
 
 export default function BoardGetUI(props: IBoardGetUIProps) {
+  const [visible, setVisible] = useState(false);
   return (
     <S.Wrapper>
       <S.BoardWrapper>
@@ -46,7 +48,30 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
           <S.Title>{props.data?.fetchBoard.title}</S.Title>
           <S.ContentWrapper>
             <S.ContentImg>
-              <S.Img src="/images/board/boardImg.png" />
+              {/* <S.Img
+                src={`https://storage.googleapis.com/${props.data?.fetchBoard.images?.[0]}`}/> */}
+              <Image
+                preview={{ visible: false }}
+                width={500}
+                height={300}
+                src={`https://storage.googleapis.com/${props.data?.fetchBoard.images?.[0]}`}
+                onClick={() => setVisible(true)}
+              />
+              <div style={{ display: "none" }}>
+                <Image.PreviewGroup
+                  preview={{
+                    visible,
+                    onVisibleChange: (vis) => setVisible(vis),
+                  }}
+                >
+                  {props.data?.fetchBoard.images?.map((el) => (
+                    <Image
+                      key={el}
+                      src={`https://storage.googleapis.com/${el}`}
+                    />
+                  ))}
+                </Image.PreviewGroup>
+              </div>
             </S.ContentImg>
             <S.Content>
               <S.Text>{props.data?.fetchBoard.contents}</S.Text>
@@ -58,9 +83,7 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
                   width={486}
                   height={270}
                   muted={true}
-                  // playing={true}
                   controls={true}
-                  // loop={true}
                 />
               ) : (
                 <S.VideoAlt>No Video</S.VideoAlt>

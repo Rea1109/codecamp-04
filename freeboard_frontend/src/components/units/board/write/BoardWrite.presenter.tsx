@@ -21,7 +21,8 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
                   placeholder="이름을 입력해주세요"
                   defaultValue={props.data?.fetchBoard.writer || ""}
                   readOnly={props.isEdit}
-                  onChange={props.onChangeWriter}
+                  onChange={props.onChangeBoardInput}
+                  name="writer"
                 />
                 <S.ErrorText>{props.errorWriter}</S.ErrorText>
               </S.Writer>
@@ -30,7 +31,8 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
                 <S.InputBox2
                   type="password"
                   placeholder="비밀번호를 입력해주세요"
-                  onChange={props.onChangePassword}
+                  onChange={props.onChangeBoardInput}
+                  name="password"
                 />
                 <S.ErrorText>{props.errorPassword}</S.ErrorText>
               </S.Writer>
@@ -41,7 +43,8 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
                 type="text"
                 placeholder="제목을 작성해주세요"
                 defaultValue={props.data?.fetchBoard.title}
-                onChange={props.onChangeTitle}
+                onChange={props.onChangeBoardInput}
+                name="title"
               />
               <S.ErrorText>{props.errorTitle}</S.ErrorText>
             </S.InputWrapper>
@@ -50,7 +53,8 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
               <S.TextAreaBox
                 placeholder="내용을 작성해주세요"
                 defaultValue={props.data?.fetchBoard.contents}
-                onChange={props.onChangeContent}
+                onChange={props.onChangeBoardInput}
+                name="contents"
               />
               <S.ErrorText>{props.errorContent}</S.ErrorText>
             </S.InputWrapper>
@@ -63,7 +67,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
                   placeholder={
                     props.data?.fetchBoard.boardAddress?.zipcode || ""
                   }
-                  value={props.zipcode}
+                  value={props.boardAddress.zipcode}
                 />
                 <S.PostBtn
                   type="button"
@@ -74,14 +78,15 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
               <S.AddrBox
                 type="text"
                 placeholder={props.data?.fetchBoard.boardAddress?.address || ""}
-                value={props.address}
+                value={props.boardAddress.address}
                 readOnly={true}
               />
 
               <S.AddrBox
                 type="text"
                 id="extraAddr"
-                onChange={props.onChangeAddr}
+                name="addressDetail"
+                onChange={props.onChangeBoardAddress}
                 placeholder={
                   props.data?.fetchBoard.boardAddress?.addressDetail ||
                   "상세주소를 입력해주세요"
@@ -92,16 +97,30 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
               <S.Label>유튜브</S.Label>
               <S.InputBox1
                 type="text"
-                onChange={props.onChangeYoutube}
+                name="youtubeUrl"
+                onChange={props.onChangeBoardInput}
                 defaultValue={props.data?.fetchBoard.youtubeUrl || ""}
               />
             </S.InputWrapper>
             <S.InputWrapper>
               <S.Label>사진 첨부 </S.Label>
               <S.ImgWrapper>
-                <S.ImgBox>+Upload</S.ImgBox>
-                <S.ImgBox>+Upload</S.ImgBox>
-                <S.ImgBox>+Upload</S.ImgBox>
+                {props.myImages.map((el) => (
+                  <S.ImgBox
+                    key={el}
+                    src={`https://storage.googleapis.com/${el}`}
+                  />
+                ))}
+                <input
+                  style={{ display: "none" }}
+                  type="file"
+                  onChange={props.onChangeFile}
+                  ref={props.fileRef}
+                />
+                <S.AddImgBox
+                  onClick={props.onClickMyImage}
+                  src="/images/board/add-file.png"
+                />
               </S.ImgWrapper>
             </S.InputWrapper>
             <S.InputWrapper>

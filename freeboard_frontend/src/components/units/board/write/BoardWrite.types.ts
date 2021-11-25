@@ -13,6 +13,7 @@ export interface IBoardAddress {
 }
 
 export interface IUpdateBoardInput {
+  writer?: string;
   title?: string;
   contents?: string;
   youtubeUrl?: string;
@@ -20,11 +21,9 @@ export interface IUpdateBoardInput {
 }
 
 export interface IBoardWriteUIProps {
-  onChangeWriter: (e: ChangeEvent<HTMLInputElement>) => void;
-  onChangePassword: (e: ChangeEvent<HTMLInputElement>) => void;
-  onChangeTitle: (e: ChangeEvent<HTMLInputElement>) => void;
-  onChangeContent: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-  onChangeYoutube: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChangeBoardInput: (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
   addBoard: () => void;
   editBoard: () => void;
   getBoard: () => void;
@@ -34,8 +33,11 @@ export interface IBoardWriteUIProps {
   errorContent: string;
   isEdit?: boolean;
   getAddr: () => void;
-  onChangeAddr: (e: ChangeEvent<HTMLInputElement>) => void;
-  address: string;
-  zipcode: string;
+  onChangeBoardAddress: (event: ChangeEvent<HTMLInputElement>) => void;
+  boardAddress: {
+    zipcode: string;
+    address: string;
+    addressDetail: string;
+  };
   data?: Pick<IQuery, "fetchBoard">;
 }

@@ -1,5 +1,72 @@
 import HeaderUI from "./Header.presenter";
+import { Modal } from "antd";
+import { useState, ChangeEvent } from "react";
+import { useRouter } from "next/router";
+import {
+  collection,
+  getFirestore,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore/lite";
+import { firebaseApp } from "../../../../../pages/_app";
 
 export default function Header() {
-  return <HeaderUI />;
+  const router = useRouter();
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [account, setAccount] = useState({
+    email: "",
+    password: "",
+  });
+
+  const showModal = () => {
+    setIsModalVisible((prev) => !prev);
+  };
+
+  const handleOk = async () => {
+    if (account.email === "" || account.password === "") {
+      alert("로그인 정보를 입력해주세요");
+      return;
+    }
+    const user = collection(getFirestore(firebaseApp), "user");
+    const signinQuery = query(
+      user,
+      where("email", "==", account.email),
+      where("password", "==", account.password)
+    );
+    const result = await getDocs(signinQuery);
+
+    if (result.size !== 0) {
+      Modal.success({ title: "welcome " + result.docs[0].data().name });
+      setIsModalVisible((prev) => !prev);
+      router.push(`/user/${result.docs[0].data().email}`);
+    } else {
+      Modal.error({ title: "who are you?" });
+    }
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible((prev) => !prev);
+  };
+
+  const onChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
+    setAccount({
+      ...account,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  return (
+    <HeaderUI
+      isModalVisible={isModalVisible}
+      showModal={showModal}
+      handleOk={handleOk}
+      handleCancel={handleCancel}
+      onChangeInput={onChangeInput}
+      onMoveSignup={() => {
+        router.push("/user/signup");
+      }}
+    />
+  );
 }

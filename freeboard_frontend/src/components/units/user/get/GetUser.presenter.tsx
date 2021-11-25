@@ -1,12 +1,8 @@
 import * as S from "./GetUser.styles";
+import { DocumentData } from "firebase/firestore/lite";
 
 interface IGetUserUI {
-  userEmail: string;
-  userInfo: {
-    name: string;
-    password: string;
-    email: string;
-  };
+  userInfo: DocumentData | undefined;
 }
 
 export default function GetUserUI(props: IGetUserUI) {
@@ -21,10 +17,14 @@ export default function GetUserUI(props: IGetUserUI) {
         <S.InnerWrapper>
           <S.ProfileImg src="/images/board/profile.png" />
           <S.ProfileInfo>
-            <S.ProfileName>{props.userInfo.name}</S.ProfileName>
-            <S.ProfileEmail>{props.userEmail}</S.ProfileEmail>
+            <S.ProfileName>{props.userInfo?.name}</S.ProfileName>
+            <S.ProfileEmail>{props.userInfo?.email}</S.ProfileEmail>
           </S.ProfileInfo>
         </S.InnerWrapper>
+        <S.BtnWrapper>
+          <S.FunctionBtn>비밀번호 변경하기</S.FunctionBtn>
+          <S.FunctionBtn>회원 탈퇴하기</S.FunctionBtn>
+        </S.BtnWrapper>
       </S.FromWrapper>
     </S.Wrapper>
   );
