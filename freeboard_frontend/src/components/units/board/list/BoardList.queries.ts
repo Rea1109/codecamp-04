@@ -9,6 +9,12 @@ export const FETCH_BOARDS = gql`
       createdAt
       likeCount
       contents
+      images
+      boardAddress {
+        zipcode
+        address
+        addressDetail
+      }
     }
   }
 `;
@@ -20,6 +26,12 @@ export const FETCH_BOARDS_BEST = gql`
       title
       createdAt
       likeCount
+      images
+      boardAddress {
+        zipcode
+        address
+        addressDetail
+      }
     }
   }
 `;

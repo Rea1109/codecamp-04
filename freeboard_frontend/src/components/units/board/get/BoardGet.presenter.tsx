@@ -48,15 +48,19 @@ export default function BoardGetUI(props: IBoardGetUIProps) {
           <S.Title>{props.data?.fetchBoard.title}</S.Title>
           <S.ContentWrapper>
             <S.ContentImg>
-              {/* <S.Img
-                src={`https://storage.googleapis.com/${props.data?.fetchBoard.images?.[0]}`}/> */}
-              <Image
-                preview={{ visible: false }}
-                width={500}
-                height={300}
-                src={`https://storage.googleapis.com/${props.data?.fetchBoard.images?.[0]}`}
-                onClick={() => setVisible(true)}
-              />
+              {props.data?.fetchBoard.images?.[0] ? (
+                <Image
+                  preview={{ visible: false }}
+                  width={500}
+                  height={300}
+                  src={`https://storage.googleapis.com/${props.data?.fetchBoard.images?.[0]}`}
+                  onClick={() => setVisible(true)}
+                  // onError={props.handelError}
+                />
+              ) : (
+                <S.VideoAlt>No Image</S.VideoAlt>
+              )}
+
               <div style={{ display: "none" }}>
                 <Image.PreviewGroup
                   preview={{

@@ -224,6 +224,18 @@ export const BoardImg = styled.img`
   border-radius: 15px 15px 0px 0px;
   box-shadow: 0px 0px 5px gray;
 `;
+export const BoardImgError = styled.div`
+  background-color: #bdbdbd;
+  width: 100%;
+  height: 150px;
+  border-radius: 15px 15px 0px 0px;
+  box-shadow: 0px 0px 5px gray;
+  color: white;
+  font-size: 20px;
+  font-weight: bolder;
+  text-align: center;
+  padding-top: 55px;
+`;
 
 export const ProfileImg = styled.img`
   width: 20px;

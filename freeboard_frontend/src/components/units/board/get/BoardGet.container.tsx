@@ -16,6 +16,7 @@ import {
   IQueryFetchBoardArgs,
 } from "../../../../commons/types/generated/types";
 import { Modal } from "antd";
+// import { SyntheticEvent } from "react";
 
 export default function BoardGet() {
   const router = useRouter();
@@ -83,6 +84,10 @@ export default function BoardGet() {
     }
   };
 
+  // const handelError = (event: SyntheticEvent<HTMLImageElement>) => {
+  //   event.target.src = "/images/board/no-pictures.png";
+  // };
+
   return (
     <BoardGetUI
       data={data}
@@ -91,6 +96,7 @@ export default function BoardGet() {
       onClickDelete={onClickDelete}
       onClickLike={onClickLike}
       onClickDislike={onClickDislike}
+      // handelError={handelError}
     />
   );
 }

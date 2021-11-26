@@ -21,8 +21,22 @@ function solution(n, m) {
     if (mArr.indexOf(item) !== -1) nmArr.push(item);
   }
 
-  result.push(nmArr.sort((a, b) => a - b).pop());
+  result.push(Math.max(...nmArr));
   result.push((n * m) / result[0]);
 
   return result;
+}
+
+//유클리드 호제법
+function solution(n, m) {
+  let a = m; //큰수
+  let b = n; //작은수
+  let r = 0; // a%b 값
+
+  while (a % b > 0) {
+    r = a % b;
+    a = b; //큰수에 작은수를 할당
+    b = r; //작은수에 나머지 값 할당
+  }
+  return [b, (n * m) / b];
 }

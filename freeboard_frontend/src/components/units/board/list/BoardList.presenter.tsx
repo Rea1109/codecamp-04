@@ -19,7 +19,14 @@ export default function BoardListUI(props: IBoardListUIProps) {
           <S.Row>
             {props.best?.fetchBoardsOfTheBest.map((el: any) => (
               <S.BestBoardCard key={el._id}>
-                <S.BoardImg src="/images/board/bg-3.jpg" />
+                {el.images[0] ? (
+                  <S.BoardImg
+                    src={`https://storage.googleapis.com/${el.images[0]}`}
+                  />
+                ) : (
+                  <S.BoardImgError>No image</S.BoardImgError>
+                )}
+
                 <S.BoardBody>
                   <S.BestTitle onClick={props.onClickGetBoard} id={el._id}>
                     {remakeTitle(el.title)}

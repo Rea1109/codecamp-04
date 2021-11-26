@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, RefObject } from "react";
 import { IQuery } from "../../../../commons/types/generated/types";
 
 export interface IBoardWriteProps {
@@ -27,6 +27,7 @@ export interface IBoardWriteUIProps {
   addBoard: () => void;
   editBoard: () => void;
   getBoard: () => void;
+  onChangeFile: (event: ChangeEvent<HTMLInputElement>) => void;
   errorWriter: string;
   errorPassword: string;
   errorTitle: string;
@@ -34,6 +35,9 @@ export interface IBoardWriteUIProps {
   isEdit?: boolean;
   getAddr: () => void;
   onChangeBoardAddress: (event: ChangeEvent<HTMLInputElement>) => void;
+  onClickMyImage: () => void;
+  fileRef: RefObject<HTMLInputElement>;
+  myImages: string[];
   boardAddress: {
     zipcode: string;
     address: string;
