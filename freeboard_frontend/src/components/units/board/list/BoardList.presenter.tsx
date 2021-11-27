@@ -8,6 +8,7 @@ import { IBoardListUIProps } from "./BoardList.types";
 import { DatePicker } from "antd";
 import moment from "moment";
 import InfiniteScroll from "react-infinite-scroller";
+import { v4 as uuid } from "uuid";
 
 export default function BoardListUI(props: IBoardListUIProps) {
   const { RangePicker } = DatePicker;
@@ -79,7 +80,20 @@ export default function BoardListUI(props: IBoardListUIProps) {
                 <S.BoardCard key={el._id}>
                   <S.BoardBody>
                     <S.BoardTitle onClick={props.onClickGetBoard} id={el._id}>
-                      {remakeTitle(el.title)}
+                      {el.title
+                        .replaceAll(
+                          props.searchKeyword,
+                          `!@#${props.searchKeyword}!@#`
+                        )
+                        .split("!@#")
+                        .map((el) => (
+                          <S.BoardTitleText
+                            key={uuid()}
+                            isKeyword={el === props.searchKeyword}
+                          >
+                            {el}
+                          </S.BoardTitleText>
+                        ))}
                     </S.BoardTitle>
                     <S.BoardContents>
                       {remakeContents(el.contents)}

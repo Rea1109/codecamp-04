@@ -13,6 +13,7 @@ import {
   // deleteDoc,
 } from "firebase/firestore/lite";
 import { firebaseApp } from "../../../../../pages/_app";
+import { Modal } from "antd";
 
 export default function UserWrite() {
   const [userInfo, setUserInfo] = useState({
@@ -35,14 +36,14 @@ export default function UserWrite() {
 
   const onClickSubmit = async () => {
     if (!isEmailCheck) {
-      alert("이메일 중복확인 해주세요");
+      Modal.error({ title: "이메일 중복확인을 해주세요" });
       return;
     }
     await addDoc(user, {
       ...userInfo,
       createAt: new Date(),
     });
-    alert("회원가입 완료");
+    Modal.success({ title: "가입이 완료 되었습니다." });
     const userIdQuery = query(user, where("email", "==", userInfo.email));
     const result = await getDocs(userIdQuery);
     console.log(result.docs[0].data().email);
@@ -72,10 +73,10 @@ export default function UserWrite() {
     const userIdQuery = query(user, where("email", "==", userInfo.email));
     const result = await getDocs(userIdQuery);
     if (result.size === 0) {
-      alert("사용 가능합니다.");
+      Modal.success({ title: "사용 가능합니다." });
       setIsEmailCheck((prev) => !prev);
     } else {
-      alert("이미 가입된 이메일 입니다.");
+      Modal.warning({ title: "사용중인 이메일 입니다." });
     }
   };
 

@@ -8,12 +8,12 @@ import {
 // import BoardListUI from "./BoardList.presenter";
 import { FETCH_BOARDS, FETCH_BOARDS_BEST } from "./BoardList.queries";
 import BoardListUI from "./BoardList.presenter";
+// import _ from "lodash";
 
 export default function BoardList() {
   const router = useRouter();
 
   const [searchKeyword, setSearchKeyword] = useState("");
-  const [inputKeyword, setInputKeyword] = useState("");
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
 
@@ -22,10 +22,7 @@ export default function BoardList() {
     refetch,
     fetchMore,
   } = useQuery<Pick<IQuery, "fetchBoards">, IQueryFetchBoardsArgs>(
-    FETCH_BOARDS,
-    {
-      variables: { search: searchKeyword },
-    }
+    FETCH_BOARDS
   );
 
   const { data: best } =
@@ -36,11 +33,17 @@ export default function BoardList() {
     router.push(`/boards/${e.currentTarget.id}`);
 
   const onClickNew = () => router.push(`/boards/new`);
-  const onChangeSearchInput = (e: ChangeEvent<HTMLInputElement>) =>
-    setInputKeyword(e.target.value);
+
+  // const getDebounce = _.debounce((data) => {
+  //   refetch({ search: data });
+  // }, 1000);
+
+  const onChangeSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchKeyword(e.target.value);
+    // getDebounce(e.target.value);
+  };
 
   const onClickSearch = () => {
-    setSearchKeyword(inputKeyword);
     refetch({ search: searchKeyword });
   };
 
@@ -76,6 +79,7 @@ export default function BoardList() {
       onClickSearch={onClickSearch}
       onChangeDate={onChangeDate}
       onLoadMore={onLoadMore}
+      searchKeyword={searchKeyword}
     />
   );
 }

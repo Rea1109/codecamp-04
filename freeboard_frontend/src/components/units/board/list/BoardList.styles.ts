@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { IBoardListStylesProps } from "./BoardList.types";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -200,9 +201,14 @@ export const BoardTitle = styled.div`
   font-size: 23px;
   margin-top: 20px;
   margin-bottom: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
+  height: 30px;
 `;
 
 export const BoardContents = styled.div`
+  height: 28px;
   text-align: left;
   margin-bottom: 60px;
   font-size: 18px;
@@ -265,4 +271,9 @@ export const LikeCount = styled.div`
 export const BoardBodyWrapper = styled.div`
   height: 800px;
   overflow: auto;
+`;
+
+export const BoardTitleText = styled.span`
+  color: ${(props: IBoardListStylesProps) =>
+    props.isKeyword ? "red" : "black"};
 `;

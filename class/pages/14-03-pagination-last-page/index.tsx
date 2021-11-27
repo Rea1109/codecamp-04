@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { useState, MouseEvent, ChangeEvent } from "react";
+import { useState, ChangeEvent } from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import {
@@ -55,7 +55,7 @@ export default function PaginationLastPage() {
   //   setStartPage((prev) => prev + 10);
   // };
 
-  const handleChange = (event: MouseEvent, value: ChangeEvent) => {
+  const handleChange = (event: ChangeEvent<unknown>, value: number) => {
     setPage(Number(value));
     refetch({ page: page });
   };

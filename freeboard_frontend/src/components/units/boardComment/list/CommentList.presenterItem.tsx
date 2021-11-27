@@ -59,9 +59,9 @@ export default function CommentListUIItem(props: ICommentListUIItem) {
           },
         ],
       });
-      alert("댓글이 삭제되었습니다.");
+      Modal.success({ title: "댓글이 삭제 되었습니다." });
     } catch (error: any) {
-      alert(error.message);
+      Modal.error({ title: error.message });
     }
   };
 
