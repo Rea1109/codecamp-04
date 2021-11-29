@@ -10,6 +10,7 @@ import {
   IMutationUpdateBoardArgs,
 } from "../../../../commons/types/generated/types";
 import { Modal } from "antd";
+import { checkUploadFile } from "./BoardWrite.validation";
 
 declare const window: Window &
   typeof globalThis & {
@@ -21,23 +22,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [myImages, setMyImages] = useState<string[]>([]);
   const [uploadFile] = useMutation(UPLOAD_FILE);
-
-  const onChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
-    const myFile = event.target.files?.[0];
-    console.log(myFile);
-
-    const result = await uploadFile({
-      variables: {
-        file: myFile,
-      },
-    });
-
-    console.log(result.data.uploadFile.url);
-    setMyImages((prev) => [...prev, result.data.uploadFile.url]);
-  };
-  const onClickMyImage = () => {
-    fileRef.current?.click();
-  };
 
   const [createBoard] = useMutation<
     Pick<IMutation, "createBoard">,
@@ -105,10 +89,9 @@ export default function BoardWrite(props: IBoardWriteProps) {
     }
   };
   const editBoard = async () => {
+    console.log(props.data?.fetchBoard.images);
     const updateBoardInput: IUpdateBoardInput = {};
 
-    console.log(boardInput);
-    console.log(boardAddress);
     if (boardInput.writer !== "") updateBoardInput.writer = boardInput.writer;
     if (boardInput.title !== "") updateBoardInput.title = boardInput.title;
     if (boardInput.contents !== "")
@@ -196,6 +179,28 @@ export default function BoardWrite(props: IBoardWriteProps) {
       check = false;
     }
     return check;
+  };
+
+  const onChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
+    const myFile = checkUploadFile(event.target.files?.[0]);
+    if (!myFile) return;
+    const result = await uploadFile({
+      variables: {
+        file: myFile,
+      },
+    });
+
+    console.log(result.data.uploadFile.url);
+    setMyImages((prev) => [...prev, result.data.uploadFile.url]);
+  };
+  const onClickMyImage = () => {
+    console.log(myImages.length);
+
+    if (myImages.length > 2) {
+      Modal.warning({ title: "이미지는 최대 3개까지 등록 가능합니다." });
+      return;
+    }
+    fileRef.current?.click();
   };
 
   return (

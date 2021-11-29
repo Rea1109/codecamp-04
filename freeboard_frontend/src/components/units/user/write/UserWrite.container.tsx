@@ -68,6 +68,7 @@ export default function UserWrite() {
   //   );
   //   await deleteDoc(userRef);
   // };
+
   const checkEmail = async () => {
     if (userInfo.email === "") return;
     const userIdQuery = query(user, where("email", "==", userInfo.email));

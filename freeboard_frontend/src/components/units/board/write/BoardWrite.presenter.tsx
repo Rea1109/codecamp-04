@@ -104,24 +104,45 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
             </S.InputWrapper>
             <S.InputWrapper>
               <S.Label>사진 첨부 </S.Label>
-              <S.ImgWrapper>
-                {props.myImages.map((el) => (
-                  <S.ImgBox
-                    key={el}
-                    src={`https://storage.googleapis.com/${el}`}
+              {!props.isEdit ? (
+                <S.ImgWrapper>
+                  {props.myImages.map((el) => (
+                    <S.ImgBox
+                      key={el}
+                      src={`https://storage.googleapis.com/${el}`}
+                    />
+                  ))}
+                  <input
+                    style={{ display: "none" }}
+                    type="file"
+                    onChange={props.onChangeFile}
+                    ref={props.fileRef}
                   />
-                ))}
-                <input
-                  style={{ display: "none" }}
-                  type="file"
-                  onChange={props.onChangeFile}
-                  ref={props.fileRef}
-                />
-                <S.AddImgBox
-                  onClick={props.onClickMyImage}
-                  src="/images/board/add-file.png"
-                />
-              </S.ImgWrapper>
+                  <S.AddImgBox
+                    onClick={props.onClickMyImage}
+                    src="/images/board/add-file.png"
+                  />
+                </S.ImgWrapper>
+              ) : (
+                <S.ImgWrapper>
+                  {props.data?.fetchBoard.images?.map((el) => (
+                    <S.ImgBox
+                      key={el}
+                      src={`https://storage.googleapis.com/${el}`}
+                    />
+                  ))}
+                  <input
+                    style={{ display: "none" }}
+                    type="file"
+                    onChange={props.onChangeFile}
+                    ref={props.fileRef}
+                  />
+                  <S.AddImgBox
+                    onClick={props.onClickMyImage}
+                    src="/images/board/add-file.png"
+                  />
+                </S.ImgWrapper>
+              )}
             </S.InputWrapper>
             <S.InputWrapper>
               <S.Label>메인 설정</S.Label>
