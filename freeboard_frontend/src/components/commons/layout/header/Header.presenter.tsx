@@ -9,6 +9,8 @@ interface IHeaderUI {
   handleCancel: () => void;
   onChangeInput: (event: ChangeEvent<HTMLInputElement>) => void;
   onMoveSignup: () => void;
+  isLogin: boolean;
+  onClickSignOut: () => void;
 }
 
 export default function HeaderUI(props: IHeaderUI) {
@@ -21,8 +23,16 @@ export default function HeaderUI(props: IHeaderUI) {
         devNote.rea
       </S.Label>
       <S.BtnWrapper>
-        <S.SigninBtn onClick={props.showModal}>Sign in</S.SigninBtn>
-        <S.SignupBtn onClick={props.onMoveSignup}>Sign up</S.SignupBtn>
+        {props.isLogin ? (
+          <>
+            <S.SignupBtn onClick={props.onClickSignOut}>Sign out</S.SignupBtn>
+          </>
+        ) : (
+          <>
+            <S.SigninBtn onClick={props.showModal}>Sign in</S.SigninBtn>
+            <S.SignupBtn onClick={props.onMoveSignup}>Sign up</S.SignupBtn>
+          </>
+        )}
       </S.BtnWrapper>
       {props.isModalVisible && (
         <Modal

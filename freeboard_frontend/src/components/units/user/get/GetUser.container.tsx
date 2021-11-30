@@ -25,7 +25,6 @@ export default function GetUser() {
       );
       const result = await getDocs(getUserQuery);
       setUserInfo(result.docs[0].data());
-      console.log(userInfo);
     };
     getUser();
   }, []);

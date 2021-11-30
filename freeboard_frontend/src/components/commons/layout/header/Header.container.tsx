@@ -1,6 +1,6 @@
 import HeaderUI from "./Header.presenter";
 import { Modal } from "antd";
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { useRouter } from "next/router";
 import {
   collection,
@@ -14,10 +14,15 @@ import { firebaseApp } from "../../../../../pages/_app";
 export default function Header() {
   const router = useRouter();
 
+  const [isLogin, setIsLogin] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [account, setAccount] = useState({
     email: "",
     password: "",
+  });
+
+  useEffect(() => {
+    window.localStorage.getItem("info") ? setIsLogin(true) : setIsLogin(false);
   });
 
   const showModal = () => {
@@ -38,6 +43,7 @@ export default function Header() {
     const result = await getDocs(signinQuery);
 
     if (result.size !== 0) {
+      window.localStorage.setItem("info", "test");
       Modal.success({ title: "welcome " + result.docs[0].data().name });
       setIsModalVisible((prev) => !prev);
       router.push(`/user/${result.docs[0].data().email}`);
@@ -57,6 +63,12 @@ export default function Header() {
     });
   };
 
+  const onClickSignOut = () => {
+    alert("로그아웃!");
+    window.localStorage.removeItem("info");
+    router.push("/boards");
+  };
+
   return (
     <HeaderUI
       isModalVisible={isModalVisible}
@@ -67,6 +79,8 @@ export default function Header() {
       onMoveSignup={() => {
         router.push("/user/signup");
       }}
+      isLogin={isLogin}
+      onClickSignOut={onClickSignOut}
     />
   );
 }

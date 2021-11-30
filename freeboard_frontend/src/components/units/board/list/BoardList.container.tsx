@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { ChangeEvent, MouseEvent, useState } from "react";
+import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import {
   IQuery,
   IQueryFetchBoardsArgs,
@@ -9,8 +9,11 @@ import {
 import { FETCH_BOARDS, FETCH_BOARDS_BEST } from "./BoardList.queries";
 import BoardListUI from "./BoardList.presenter";
 // import _ from "lodash";
-
 export default function BoardList() {
+  useEffect(() => {
+    console.log(window.localStorage.getItem("info"));
+  }, []);
+
   const router = useRouter();
 
   const [searchKeyword, setSearchKeyword] = useState("");
