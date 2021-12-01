@@ -47,9 +47,21 @@ export default function UserWrite() {
     const userIdQuery = query(user, where("email", "==", userInfo.email));
     const result = await getDocs(userIdQuery);
     console.log(result.docs[0].data().email);
-    router.push(`/user/${result.docs[0].data().email}`);
+    // router.push(`/user/${result.docs[0].data().email}`);
+    router.push("/boards");
   };
 
+  const checkEmail = async () => {
+    if (userInfo.email === "") return;
+    const userIdQuery = query(user, where("email", "==", userInfo.email));
+    const result = await getDocs(userIdQuery);
+    if (result.size === 0) {
+      Modal.success({ title: "사용 가능합니다." });
+      setIsEmailCheck((prev) => !prev);
+    } else {
+      Modal.warning({ title: "사용중인 이메일 입니다." });
+    }
+  };
   // const modify = async () => {
   //   const userRef = doc(
   //     getFirestore(firebaseApp),
@@ -68,18 +80,6 @@ export default function UserWrite() {
   //   );
   //   await deleteDoc(userRef);
   // };
-
-  const checkEmail = async () => {
-    if (userInfo.email === "") return;
-    const userIdQuery = query(user, where("email", "==", userInfo.email));
-    const result = await getDocs(userIdQuery);
-    if (result.size === 0) {
-      Modal.success({ title: "사용 가능합니다." });
-      setIsEmailCheck((prev) => !prev);
-    } else {
-      Modal.warning({ title: "사용중인 이메일 입니다." });
-    }
-  };
 
   return (
     <UserWriteUI

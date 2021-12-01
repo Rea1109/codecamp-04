@@ -22,7 +22,9 @@ export default function Header() {
   });
 
   useEffect(() => {
-    window.localStorage.getItem("info") ? setIsLogin(true) : setIsLogin(false);
+    window.localStorage.getItem("isLogin")
+      ? setIsLogin(true)
+      : setIsLogin(false);
   });
 
   const showModal = () => {
@@ -43,7 +45,7 @@ export default function Header() {
     const result = await getDocs(signinQuery);
 
     if (result.size !== 0) {
-      window.localStorage.setItem("info", "test");
+      window.localStorage.setItem("isLogin", "true");
       Modal.success({ title: "welcome " + result.docs[0].data().name });
       setIsModalVisible((prev) => !prev);
       router.push(`/user/${result.docs[0].data().email}`);
@@ -64,8 +66,7 @@ export default function Header() {
   };
 
   const onClickSignOut = () => {
-    alert("로그아웃!");
-    window.localStorage.removeItem("info");
+    window.localStorage.removeItem("isLogin");
     router.push("/boards");
   };
 

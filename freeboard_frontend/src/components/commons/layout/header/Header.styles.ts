@@ -33,6 +33,7 @@ export const SigninBtn = styled.button`
 export const SignupBtn = styled.button`
   width: 100px;
   height: 52px;
+  margin-top: 10px;
   margin-left: 15px;
   font-size: 20px;
   border: none;
