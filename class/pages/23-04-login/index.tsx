@@ -35,14 +35,20 @@ export default function LoginPage() {
   };
 
   const onClickLogin = async () => {
+    console.log(email, password);
     const result = await loginUser({
       variables: {
         email,
         password,
       },
     });
+    console.log(result.data?.loginUser.accessToken);
+    localStorage.setItem(
+      "accessToken",
+      result.data?.loginUser.accessToken || ""
+    );
     setAccessToken?.(result.data?.loginUser.accessToken || ""); // 여기서 setAccesToken , 글로벌 스테이트에
-    router.push("/22-02-login-success");
+    router.push("/23-05-login-success");
   };
   return (
     <>
