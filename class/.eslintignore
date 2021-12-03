@@ -1,1 +1,5 @@
 /src/commons/types/generated/types.d.ts
+
+/pages/23-01-hocexample/*
+
+/src/components/commons/hocs/withAuth.tsx
