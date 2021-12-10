@@ -5,6 +5,7 @@ import {
   InMemoryCache,
   ApolloLink,
 } from "@apollo/client";
+import { onError } from "@apollo/client/link/error";
 import "antd/dist/antd.css";
 import { AppProps } from "next/dist/shared/lib/router/router";
 import Layout from "../src/components/commons/layout";
@@ -20,6 +21,7 @@ import {
   SetStateAction,
   useEffect,
 } from "react";
+import { getAccessToken } from "../src/commons/libraries/getAccessToken";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -59,29 +61,54 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken") || "";
-    if (accessToken) setMyAccessToken(accessToken);
+    // const accessToken = localStorage.getItem("accessToken") || "";
+    // if (accessToken) setMyAccessToken(accessToken);
+    // 로컬 스토리지에서 끄내왔을때 로그인한 유저면 리프레쉬 토크 계속 받아오기
+    if (localStorage.getItem("refreshToken")) getAccessToken(setMyAccessToken);
   }, []);
 
-  const uploadLink = createUploadLink({
-    uri: "http://backend04.codebootcamp.co.kr/graphql",
-    headers: { authorization: `Bearer ${myAccessToken}` },
+  const errorLink = onError(({ graphQLErrors, operation, forward }) => {
+    if (graphQLErrors) {
+      for (const err of graphQLErrors) {
+        // 1. 토크만료 에러를 캐치
+        if (err.extensions?.code === "UNAUTHENTICATED") {
+          // 3. 기존에 실패한 요청 다시 재요청하기 , operation 안에는 만료된 토큰도 들어있어서 그 부분을 바꿔줘야 함
+          operation.setContext({
+            headers: {
+              ...operation.getContext().headers,
+              authorization: `Bearer ${getAccessToken(setMyAccessToken)}`, // 2. refreshToken 으로 accessToken 재발급 받기 => restoreAccessToken`,
+            },
+          });
+
+          return forward(operation);
+        }
+      }
+    }
   });
 
+  const uploadLink = createUploadLink({
+    uri: "https://backend04.codebootcamp.co.kr/graphql",
+    headers: { authorization: `Bearer ${myAccessToken}` },
+    credentials: "include",
+  });
+
+  // ApolloClient 셋팅
   const client = new ApolloClient({
-    link: ApolloLink.from([uploadLink as unknown as ApolloLink]),
+    link: ApolloLink.from([errorLink, uploadLink as unknown as ApolloLink]),
     cache: new InMemoryCache(),
   });
 
   return (
-    <GlobalContext.Provider value={myValue}>
-      <ApolloProvider client={client}>
-        <Global styles={globalStyles} />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ApolloProvider>
-    </GlobalContext.Provider>
+    <>
+      <GlobalContext.Provider value={myValue}>
+        <ApolloProvider client={client}>
+          <Global styles={globalStyles} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ApolloProvider>
+      </GlobalContext.Provider>
+    </>
   );
 }
 
