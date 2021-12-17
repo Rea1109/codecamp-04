@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/nextjs";
 import { Global } from "@emotion/react";
 import {
   ApolloClient,
@@ -48,6 +49,11 @@ interface IGlobalContext {
 
 // Initialize Firebase
 export const firebaseApp = initializeApp(firebaseConfig);
+
+Sentry.init({
+  dsn: "https://e3929f023ef64d53bb042fe327a5b4e8@o1091878.ingest.sentry.io/6109511",
+});
+
 export const GlobalContext = createContext<IGlobalContext>({});
 
 function MyApp({ Component, pageProps }: AppProps) {
