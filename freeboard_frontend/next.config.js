@@ -6,4 +6,6 @@ module.exports = {
 
     return config;
   },
+  reactStrictMode: true,
+  trailingSlash: true,
 };
