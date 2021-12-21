@@ -6,7 +6,7 @@ export default function BoardsPage(props) {
     <>
       <Head>
         <meta property="og:title" content={props.fetchUseditem.name} />
-        <meta property="og:image" content={props.fetchUseditem.images[0]} />
+        <meta property="og:image" content={props.fetchUseditem.images} />
         <meta property="og:description" content={props.fetchUseditem.remarks} />
       </Head>
       <div> 안녕하세요 상품페이지 입니다.</div>
